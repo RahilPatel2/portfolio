@@ -76,22 +76,31 @@ export default function FinalScene() {
       {/* Background Cinematic Noise */}
       <div className="absolute inset-0 opacity-[0.03] mix-blend-screen pointer-events-none bg-[url('https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Dissolve_Noise_Texture.png')] bg-repeat animate-[spin_60s_linear_infinite]" />
 
-      <div className="z-10 flex flex-col items-center justify-center text-center px-6 max-w-4xl animate-ambient-float w-full">
+      <div className="z-10 flex flex-col items-center justify-center text-center max-w-4xl animate-ambient-float w-full contact-wrapper">
         <style dangerouslySetInnerHTML={{__html: `
-          .contact-text { margin-bottom: 60px; }
-          .contact-socials { margin-top: 80px; }
-          .lets-talk-btn { padding: 20px 48px; }
-          @media (min-width: 768px) {
-            .contact-text { margin-bottom: 140px; }
-            .contact-socials { margin-top: 120px; }
-            .lets-talk-btn { padding: 32px 80px; }
+          /* Default/Desktop Styles (Untouched) */
+          .contact-wrapper { padding: 0 24px; }
+          .contact-heading { margin-bottom: 32px; }
+          .contact-text { margin-bottom: 140px; }
+          .contact-socials { margin-top: 120px; }
+          .lets-talk-btn { padding: 32px 80px; }
+          .remarkable-text { padding-bottom: 11px; margin-bottom: 3px; display: inline-block; }
+
+          /* MOBILE-ONLY OVERRIDES */
+          @media (max-width: 767px) {
+            .contact-wrapper { padding: 0 32px; }
+            .contact-heading { margin-bottom: 48px !important; }
+            .contact-text { margin-bottom: 64px !important; padding: 0 16px; line-height: 1.6; }
+            .contact-socials { margin-top: 80px !important; gap: 32px !important; }
+            .lets-talk-btn { padding: 20px 48px !important; width: 100%; max-width: 300px; margin: 0 auto; }
+            .remarkable-text { padding-bottom: 8px !important; margin-bottom: 12px !important; margin-top: 8px !important; }
           }
         `}} />
         <h3 className="text-xs md:text-sm font-mono tracking-widest text-white/50 mb-8 md:mb-12 uppercase">06 // Contact</h3>
         
-        <h2 className="text-4xl md:text-7xl lg:text-8xl font-light tracking-tight leading-[1.1] text-white mb-6 md:mb-8 font-sans">
+        <h2 className="contact-heading text-4xl md:text-7xl lg:text-8xl font-light tracking-tight leading-[1.1] text-white font-sans">
           LET&apos;S BUILD SOMETHING<br/>
-          <span className="font-light text-white/80 border-b border-white/30 inline-block" style={{ paddingBottom: '11px', marginBottom: '3px' }}>REMARKABLE.</span>
+          <span className="font-light text-white/80 border-b border-white/30 remarkable-text">REMARKABLE.</span>
         </h2>
         
         <p className="contact-text text-base md:text-2xl text-white/50 font-light max-w-2xl">
