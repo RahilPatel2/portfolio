@@ -66,7 +66,7 @@ export default function Skills() {
           <div className="w-full shrink-0" style={{ height: "100px" }} />
         </motion.div>
       
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-x-24 md:gap-y-10 w-full px-4 md:px-0">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-x-16 lg:gap-x-24 md:gap-y-10 w-full px-4 md:px-0">
           {skills.map((skillGroup, i) => {
             // Stagger by row and column
             const row = Math.floor(i / 3);
@@ -105,8 +105,8 @@ export default function Skills() {
                   {skillGroup.items.map((item, j) => (
                     <motion.div
                       key={j}
-                      whileHover={{ scale: 1.1, x: 10, color: "#ffffff" }}
-                      className="text-base md:text-3xl font-light text-white/60 transition-all duration-300 hover:text-white"
+                      whileHover={{ scale: 1.1, x: 10 }}
+                      className="text-base sm:text-lg md:text-2xl lg:text-3xl font-light text-white/60 transition-all duration-300 hover:text-white"
                     >
                       {item}
                     </motion.div>

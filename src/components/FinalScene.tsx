@@ -86,6 +86,13 @@ export default function FinalScene() {
           .lets-talk-btn { padding: 32px 80px; }
           .remarkable-text { padding-bottom: 11px; margin-bottom: 3px; display: inline-block; }
 
+          /* TABLET OVERRIDES */
+          @media (min-width: 768px) and (max-width: 1023px) {
+            .contact-text { margin-bottom: 90px !important; }
+            .contact-socials { margin-top: 80px !important; }
+            .lets-talk-btn { padding: 24px 60px !important; }
+          }
+
           /* MOBILE-ONLY OVERRIDES */
           @media (max-width: 767px) {
             .contact-wrapper { padding: 0 32px; }

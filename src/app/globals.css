@@ -11,11 +11,15 @@
     color: var(--color-foreground);
     font-family: Arial, Helvetica, sans-serif;
     overflow-x: hidden;
-    cursor: none;
   }
 
-  a, button, input, select, textarea {
-    cursor: none !important;
+  @media (hover: hover) and (pointer: fine) {
+    body, a, button, select, [role="button"] {
+      cursor: none !important;
+    }
+    input, textarea {
+      cursor: text !important;
+    }
   }
 }
 

@@ -3,85 +3,161 @@
 import { useEffect, useRef, useState } from "react";
 import { useScroll, useTransform, motion } from "framer-motion";
 
-const FRAME_COUNT = 179;
+const DESKTOP_FRAME_COUNT = 179;
+const MOBILE_FRAME_COUNT = 298;
+
+function isMobileOrTabletDevice() {
+  if (typeof window === "undefined") return false;
+  return window.innerWidth < 1024 || window.innerHeight > window.innerWidth;
+}
 
 export default function ScrollyCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const imagesRef = useRef<(HTMLImageElement | null)[]>([]);
+  const lastDrawnImageRef = useRef<HTMLImageElement | null>(null);
+  const isMobileRef = useRef<boolean>(false);
+
+  const [modeKey, setModeKey] = useState<"desktop" | "mobile">("desktop");
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end end"],
   });
 
-  // By using Lenis, we already have smooth scrolling globally.
-  // Using useSpring here causes "double smoothing" lag. Direct mapping is perfectly buttery.
   const smoothProgress = scrollYProgress;
 
-  // Load images
+  // Detect mode (desktop vs mobile/tablet) on mount and resize
   useEffect(() => {
-    const loadedImages: HTMLImageElement[] = [];
+    const updateMode = () => {
+      const isMob = isMobileOrTabletDevice();
+      isMobileRef.current = isMob;
+      setModeKey((prev) => {
+        const next = isMob ? "mobile" : "desktop";
+        return prev !== next ? next : prev;
+      });
+    };
+
+    updateMode();
+    window.addEventListener("resize", updateMode);
+    window.addEventListener("orientationchange", updateMode);
+    return () => {
+      window.removeEventListener("resize", updateMode);
+      window.removeEventListener("orientationchange", updateMode);
+    };
+  }, []);
+
+  // Load appropriate image sequence based on detected mode
+  useEffect(() => {
+    let isCancelled = false;
+    const isMobileMode = modeKey === "mobile";
+    isMobileRef.current = isMobileMode;
+
+    const frameCount = isMobileMode ? MOBILE_FRAME_COUNT : DESKTOP_FRAME_COUNT;
+    const loadedImages: (HTMLImageElement | null)[] = new Array(frameCount).fill(null);
+    imagesRef.current = loadedImages;
+
     let loadedCount = 0;
 
-    for (let i = 0; i < FRAME_COUNT; i++) {
+    for (let i = 0; i < frameCount; i++) {
       const img = new Image();
       const frameNumber = i.toString().padStart(3, "0");
-      img.src = `/sequence/frame_${frameNumber}_delay-0.056s.png`;
-      img.onload = async () => {
+      img.src = isMobileMode 
+        ? `/Data-mobile/Data-mobile/frame_${frameNumber}_delay-0.033s.png`
+        : `/sequence/frame_${frameNumber}_delay-0.056s.png`;
+
+      img.onload = () => {
+        if (isCancelled) return;
+        loadedImages[i] = img;
         loadedCount++;
-        if (loadedCount === FRAME_COUNT) {
-          // Pre-decode first 30 frames to prevent initial scroll lag
-          try {
-            await Promise.all(loadedImages.slice(0, 30).map(image => image.decode()));
-          } catch (e) {
-            console.error("Decoding error:", e);
+
+        // Draw the very first frame immediately as soon as it arrives
+        if (i === 0 && canvasRef.current) {
+          const ctx = canvasRef.current.getContext("2d");
+          if (ctx) {
+            lastDrawnImageRef.current = img;
+            drawImageCover(ctx, canvasRef.current, img);
           }
-          setImages(loadedImages);
-          // Draw first frame immediately once all loaded
-          if (canvasRef.current) {
-            const ctx = canvasRef.current.getContext("2d");
-            if (ctx) drawImageCover(ctx, canvasRef.current, loadedImages[0]);
+        }
+
+        // When all frames are ready or during progress, ensure current frame is up to date
+        if (loadedCount === frameCount && canvasRef.current) {
+          const ctx = canvasRef.current.getContext("2d");
+          const curProgress = smoothProgress.get();
+          const target = Math.min(frameCount - 1, Math.max(0, Math.floor(curProgress * frameCount)));
+          if (ctx && loadedImages[target]) {
+            lastDrawnImageRef.current = loadedImages[target];
+            drawImageCover(ctx, canvasRef.current, loadedImages[target]!);
           }
         }
       };
-      loadedImages.push(img);
+
+      // Pre-decode initial 20 frames to avoid initial scroll lag
+      if (i < 20 && typeof img.decode === "function") {
+        img.decode().catch(() => {});
+      }
     }
-  }, []);
 
-  const frameIndex = useTransform(smoothProgress, [0, 1], [0, FRAME_COUNT - 1]);
+    return () => {
+      isCancelled = true;
+    };
+  }, [modeKey, smoothProgress]);
 
+  // Handle scroll progress to update canvas frame
   useEffect(() => {
-    return frameIndex.on("change", (latest) => {
-      if (images.length === FRAME_COUNT && canvasRef.current) {
-        const ctx = canvasRef.current.getContext("2d");
-        const currentFrame = Math.floor(latest);
-        if (ctx && images[currentFrame]) {
-          requestAnimationFrame(() => {
-            drawImageCover(ctx, canvasRef.current!, images[currentFrame]);
-          });
+    return smoothProgress.on("change", (latest) => {
+      if (!canvasRef.current) return;
+      const ctx = canvasRef.current.getContext("2d");
+      if (!ctx) return;
+
+      const frameCount = isMobileRef.current ? MOBILE_FRAME_COUNT : DESKTOP_FRAME_COUNT;
+      const targetFrame = Math.min(frameCount - 1, Math.max(0, Math.floor(latest * frameCount)));
+
+      const loadedList = imagesRef.current;
+      let imgToDraw = loadedList[targetFrame];
+
+      // If exact frame is still downloading, fall back to closest loaded frame
+      if (!imgToDraw || !imgToDraw.complete || imgToDraw.naturalWidth === 0) {
+        for (let f = targetFrame - 1; f >= 0; f--) {
+          if (loadedList[f] && loadedList[f].complete && loadedList[f].naturalWidth > 0) {
+            imgToDraw = loadedList[f];
+            break;
+          }
         }
       }
+
+      if (imgToDraw) {
+        lastDrawnImageRef.current = imgToDraw;
+        requestAnimationFrame(() => {
+          if (canvasRef.current && imgToDraw) {
+            drawImageCover(ctx, canvasRef.current, imgToDraw);
+          }
+        });
+      }
     });
-  }, [frameIndex, images]);
+  }, [smoothProgress]);
 
   // Handle Resize
   useEffect(() => {
     const handleResize = () => {
-      if (canvasRef.current && images.length === FRAME_COUNT) {
+      if (canvasRef.current) {
         canvasRef.current.width = window.innerWidth;
         canvasRef.current.height = window.innerHeight;
         const ctx = canvasRef.current.getContext("2d");
-        const currentFrame = Math.floor(frameIndex.get());
-        if (ctx && images[currentFrame]) {
-          drawImageCover(ctx, canvasRef.current, images[currentFrame]);
+        if (ctx && lastDrawnImageRef.current) {
+          drawImageCover(ctx, canvasRef.current, lastDrawnImageRef.current);
         }
       }
     };
 
     handleResize(); // Initial setup
     window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [images, frameIndex]);
+    window.addEventListener("orientationchange", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  }, []);
 
   // TIMELINE
   // DESKTOP TIMINGS (LOCKED)
@@ -104,7 +180,7 @@ export default function ScrollyCanvas() {
   const m4Scale = useTransform(smoothProgress, [0.82, 1], [0.95, 1.05]);
   const m4Blur = useTransform(smoothProgress, [0.82, 0.88, 0.98, 1], ["blur(20px)", "blur(0px)", "blur(0px)", "blur(20px)"]);
 
-  // MOBILE TIMINGS
+  // MOBILE & TABLET TIMINGS
   const mM1Opacity = useTransform(smoothProgress, [0, 0.20, 0.25, 1], [1, 1, 0, 0]);
   const mM1Scale = useTransform(smoothProgress, [0, 0.25], [1, 1.05]);
   const mM1Blur = useTransform(smoothProgress, [0, 0.20, 0.25], ["blur(0px)", "blur(0px)", "blur(20px)"]);
@@ -132,81 +208,89 @@ export default function ScrollyCanvas() {
         {/* =======================
             MOMENT 1
         ========================= */}
-        {/* Desktop */}
-        <motion.div style={{ opacity: m1Opacity, scale: m1Scale, filter: m1Blur }} className="hidden md:flex absolute inset-0 flex-col items-center justify-center pointer-events-none text-white text-center px-6">
-          <h1 className="text-5xl md:text-8xl font-light tracking-[0.15em] mb-4 drop-shadow-2xl">RAHIL PAMBHAR</h1>
-          <p className="text-xl md:text-3xl font-mono tracking-[0.3em] text-white/70">
+        {/* Desktop (Untouched for screens >= 1024px) */}
+        <motion.div style={{ opacity: m1Opacity, scale: m1Scale, filter: m1Blur }} className="hidden lg:flex absolute inset-0 flex-col items-center justify-center pointer-events-none text-white text-center px-6">
+          <h1 className="text-5xl lg:text-8xl font-light tracking-[0.15em] mb-4 drop-shadow-2xl">RAHIL PAMBHAR</h1>
+          <p className="text-xl lg:text-3xl font-mono tracking-[0.3em] text-white/70">
             FULL STACK DEVELOPER
             <motion.span animate={{ opacity: [1, 0, 1] }} transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }} className="inline-block ml-1">|</motion.span>
           </p>
         </motion.div>
-        {/* Mobile */}
-        <motion.div style={{ opacity: mM1Opacity, scale: mM1Scale, filter: mM1Blur }} className="flex md:hidden absolute inset-0 flex-col items-center justify-center pointer-events-none text-white text-center px-4">
-          <h1 className="text-4xl font-light tracking-[0.15em] mb-3 drop-shadow-2xl text-center w-full">RAHIL PAMBHAR</h1>
-          <p className="text-sm font-mono tracking-[0.2em] text-white/70 w-full text-center">
+        {/* Mobile & Tablet */}
+        <motion.div style={{ opacity: mM1Opacity, scale: mM1Scale, filter: mM1Blur }} className="flex lg:hidden absolute inset-0 flex-col items-center justify-center pointer-events-none text-white text-center px-4">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl font-light tracking-[0.15em] mb-3 drop-shadow-2xl text-center w-full">RAHIL PAMBHAR</h1>
+          <p className="text-sm sm:text-lg md:text-2xl font-mono tracking-[0.2em] text-white/70 w-full text-center">
             FULL STACK DEVELOPER
+            <motion.span animate={{ opacity: [1, 0, 1] }} transition={{ duration: 0.8, repeat: Infinity, ease: "linear" }} className="inline-block ml-1">|</motion.span>
           </p>
         </motion.div>
 
         {/* =======================
             MOMENT 2
         ========================= */}
-        {/* Desktop */}
-        <motion.div style={{ opacity: m2Opacity, y: m2Y, scale: m2Scale, filter: m2Blur }} className="hidden md:flex absolute inset-0 flex-col items-start justify-center pl-8 md:pl-20 pointer-events-none text-white text-left">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-wide mb-5 drop-shadow-2xl max-w-2xl">B.Tech in Computer Science</h2>
+        {/* Desktop (Untouched for screens >= 1024px) */}
+        <motion.div style={{ opacity: m2Opacity, y: m2Y, scale: m2Scale, filter: m2Blur }} className="hidden lg:flex absolute inset-0 flex-col items-start justify-center pl-8 lg:pl-20 pointer-events-none text-white text-left">
+          <h2 className="text-4xl lg:text-7xl font-light tracking-wide mb-5 drop-shadow-2xl max-w-2xl">B.Tech in Computer Science</h2>
           <div className="border-l border-white/30 pl-5">
-            <p className="text-2xl md:text-3xl font-mono tracking-[0.15em] text-white/90">8.91 CGPA</p>
-            <p className="text-sm md:text-lg font-mono tracking-[0.1em] text-white/50 mt-2">Indrashil University · 2022–2026</p>
+            <p className="text-2xl lg:text-3xl font-mono tracking-[0.15em] text-white/90">8.91 CGPA</p>
+            <p className="text-sm lg:text-lg font-mono tracking-[0.1em] text-white/50 mt-2">Indrashil University · 2022–2026</p>
           </div>
         </motion.div>
-        {/* Mobile */}
-        <motion.div style={{ opacity: mM2Opacity, y: mM2Y, scale: mM2Scale, filter: mM2Blur }} className="flex md:hidden absolute inset-0 flex-col items-center justify-center px-6 pointer-events-none text-white text-center">
-          <h2 className="text-3xl font-light tracking-wide mb-4 drop-shadow-2xl leading-snug">B.Tech in Computer Science</h2>
-          <p className="text-xl font-mono tracking-[0.1em] text-white/90 border-t border-white/20 pt-4">8.91 CGPA</p>
+        {/* Mobile & Tablet */}
+        <motion.div style={{ opacity: mM2Opacity, y: mM2Y, scale: mM2Scale, filter: mM2Blur }} className="flex lg:hidden absolute inset-0 flex-col items-center justify-center px-6 pointer-events-none text-white text-center">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-wide mb-4 drop-shadow-2xl leading-snug max-w-xl">B.Tech in Computer Science</h2>
+          <div className="border-t border-white/20 pt-4 flex flex-col items-center">
+            <p className="text-xl sm:text-2xl md:text-3xl font-mono tracking-[0.1em] text-white/90">8.91 CGPA</p>
+            <p className="text-xs sm:text-sm md:text-base font-mono tracking-[0.1em] text-white/50 mt-2">Indrashil University · 2022–2026</p>
+          </div>
         </motion.div>
 
         {/* =======================
             MOMENT 3
         ========================= */}
-        {/* Desktop */}
-        <motion.div style={{ opacity: m3Opacity, y: m3Y, scale: m3Scale, filter: m3Blur }} className="hidden md:flex absolute inset-0 flex-col items-end justify-center pr-8 md:pr-20 pointer-events-none text-white text-right">
-          <h2 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-wide mb-5 drop-shadow-2xl max-w-2xl">Full Stack Experience</h2>
+        {/* Desktop (Untouched for screens >= 1024px) */}
+        <motion.div style={{ opacity: m3Opacity, y: m3Y, scale: m3Scale, filter: m3Blur }} className="hidden lg:flex absolute inset-0 flex-col items-end justify-center pr-8 lg:pr-20 pointer-events-none text-white text-right">
+          <h2 className="text-4xl lg:text-7xl font-light tracking-wide mb-5 drop-shadow-2xl max-w-2xl">Full Stack Experience</h2>
           <div className="border-r border-white/30 pr-5">
-            <p className="text-xl md:text-2xl font-mono tracking-[0.15em] text-white/90">INTERNED AT</p>
-            <p className="text-sm md:text-lg font-mono tracking-[0.1em] text-white/50 mt-2 max-w-md">Cloud Elevate Technologies, Magorix Ltd & Vaishnav Technology</p>
+            <p className="text-xl lg:text-2xl font-mono tracking-[0.15em] text-white/90">INTERNED AT</p>
+            <p className="text-sm lg:text-lg font-mono tracking-[0.1em] text-white/50 mt-2 max-w-md">Cloud Elevate Technologies, Magorix Ltd & Vaishnav Technology</p>
           </div>
         </motion.div>
-        {/* Mobile */}
-        <motion.div style={{ opacity: mM3Opacity, y: mM3Y, scale: mM3Scale, filter: mM3Blur }} className="flex md:hidden absolute inset-0 flex-col items-center justify-center px-6 pointer-events-none text-white text-center">
-          <h2 className="text-3xl font-light tracking-wide mb-4 drop-shadow-2xl leading-snug">Full Stack Experience</h2>
-          <div className="border-t border-white/20 pt-4">
-            <p className="text-sm font-mono tracking-[0.1em] text-white/90 mb-1">INTERNED AT</p>
-            <p className="text-xs font-mono tracking-widest text-white/50 leading-relaxed max-w-[250px] mx-auto">Cloud Elevate, Magorix & Vaishnav Tech</p>
+        {/* Mobile & Tablet */}
+        <motion.div style={{ opacity: mM3Opacity, y: mM3Y, scale: mM3Scale, filter: mM3Blur }} className="flex lg:hidden absolute inset-0 flex-col items-center justify-center px-6 pointer-events-none text-white text-center">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-wide mb-4 drop-shadow-2xl leading-snug max-w-xl">Full Stack Experience</h2>
+          <div className="border-t border-white/20 pt-4 flex flex-col items-center">
+            <p className="text-sm sm:text-base md:text-xl font-mono tracking-[0.15em] text-white/90 mb-2">INTERNED AT</p>
+            <p className="text-xs sm:text-sm md:text-base font-mono tracking-widest text-white/60 leading-relaxed max-w-md mx-auto">
+              Cloud Elevate Technologies, Magorix Ltd & Vaishnav Technology
+            </p>
           </div>
         </motion.div>
 
         {/* =======================
             MOMENT 4
         ========================= */}
-        {/* Desktop */}
-        <motion.div style={{ opacity: m4Opacity, y: m4Y, scale: m4Scale, filter: m4Blur }} className="hidden md:flex absolute inset-0 flex-col items-center justify-center pointer-events-none text-white text-center px-6">
+        {/* Desktop (Untouched for screens >= 1024px) */}
+        <motion.div style={{ opacity: m4Opacity, y: m4Y, scale: m4Scale, filter: m4Blur }} className="hidden lg:flex absolute inset-0 flex-col items-center justify-center pointer-events-none text-white text-center px-6">
           <div className="absolute inset-0 bg-black/20 -z-10" />
-          <h2 className="text-4xl md:text-7xl lg:text-8xl font-light tracking-tight mb-8 drop-shadow-2xl max-w-4xl">I BUILD DIGITAL EXPERIENCES</h2>
-          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6 text-white/50 font-mono tracking-widest text-xs md:text-sm">
+          <h2 className="text-4xl lg:text-8xl font-light tracking-tight mb-8 drop-shadow-2xl max-w-4xl">I BUILD DIGITAL EXPERIENCES</h2>
+          <div className="flex flex-wrap items-center justify-center gap-3 lg:gap-6 text-white/50 font-mono tracking-widest text-xs lg:text-sm">
             <span>SNAP & GET</span>
-            <span className="hidden md:inline-block w-1 h-1 bg-white/20 rounded-full" />
+            <span className="hidden lg:inline-block w-1 h-1 bg-white/20 rounded-full" />
             <span>COLLABORATIVE WHITEBOARD</span>
-            <span className="hidden md:inline-block w-1 h-1 bg-white/20 rounded-full" />
+            <span className="hidden lg:inline-block w-1 h-1 bg-white/20 rounded-full" />
             <span>WEATHER DASHBOARD</span>
           </div>
         </motion.div>
-        {/* Mobile */}
-        <motion.div style={{ opacity: mM4Opacity, y: mM4Y, scale: mM4Scale, filter: mM4Blur }} className="flex md:hidden absolute inset-0 flex-col items-center justify-center pointer-events-none text-white text-center px-4">
+        {/* Mobile & Tablet */}
+        <motion.div style={{ opacity: mM4Opacity, y: mM4Y, scale: mM4Scale, filter: mM4Blur }} className="flex lg:hidden absolute inset-0 flex-col items-center justify-center pointer-events-none text-white text-center px-4">
           <div className="absolute inset-0 bg-black/30 -z-10" />
-          <h2 className="text-3xl font-light tracking-tight mb-6 drop-shadow-2xl leading-snug">I BUILD DIGITAL EXPERIENCES</h2>
-          <div className="flex flex-col items-center justify-center gap-3 text-white/50 font-mono tracking-widest text-[10px]">
+          <h2 className="text-3xl sm:text-5xl md:text-6xl font-light tracking-tight mb-6 drop-shadow-2xl leading-snug">I BUILD DIGITAL EXPERIENCES</h2>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 md:gap-6 text-white/50 font-mono tracking-widest text-[10px] sm:text-xs md:text-sm">
             <span>SNAP & GET</span>
+            <span className="hidden sm:inline-block w-1 h-1 bg-white/20 rounded-full" />
             <span>COLLABORATIVE WHITEBOARD</span>
+            <span className="hidden sm:inline-block w-1 h-1 bg-white/20 rounded-full" />
             <span>WEATHER DASHBOARD</span>
           </div>
         </motion.div>
@@ -224,10 +308,10 @@ export default function ScrollyCanvas() {
 }
 
 function drawImageCover(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, img: HTMLImageElement) {
-  if (!img.complete || img.naturalWidth === 0) return;
+  if (!img || !img.complete || img.naturalWidth === 0) return;
   
   const canvasRatio = canvas.width / canvas.height;
-  const imgRatio = img.width / img.height;
+  const imgRatio = img.naturalWidth / img.naturalHeight;
   
   let renderWidth = canvas.width;
   let renderHeight = canvas.height;
@@ -247,4 +331,5 @@ function drawImageCover(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(img, x, y, renderWidth, renderHeight);
 }
+
 

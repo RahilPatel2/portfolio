@@ -34,10 +34,10 @@ export default function ProjectScene({ index, title, category, color }: ProjectS
           style={{ scale }}
         >
           <div 
-            className="w-[70vw] h-[70vh] rounded-2xl opacity-20 blur-3xl mix-blend-screen transition-colors duration-1000"
+            className="w-[85vw] sm:w-[70vw] h-[60vh] sm:h-[70vh] rounded-2xl opacity-20 blur-3xl mix-blend-screen transition-colors duration-1000"
             style={{ backgroundColor: color }}
           />
-          <div className="absolute w-[50vw] h-[50vh] border border-white/10 rounded-xl bg-black/50 backdrop-blur-md flex items-center justify-center overflow-hidden">
+          <div className="absolute w-[82vw] sm:w-[65vw] lg:w-[50vw] h-[40vh] sm:h-[45vh] lg:h-[50vh] border border-white/10 rounded-xl bg-black/50 backdrop-blur-md flex items-center justify-center overflow-hidden">
              {/* Decorative abstract UI elements */}
              <div className="absolute top-0 left-0 w-full h-10 border-b border-white/10 flex items-center px-4 gap-2">
                 <div className="w-2 h-2 rounded-full bg-white/20" />
@@ -52,15 +52,15 @@ export default function ProjectScene({ index, title, category, color }: ProjectS
         </motion.div>
 
         {/* Project Info */}
-        <div className="relative z-10 flex flex-col items-center justify-center text-center max-w-5xl px-6 mt-32">
-          <h4 className="text-xs md:text-sm font-mono tracking-[0.3em] text-white/60 mb-6 uppercase drop-shadow-md">
+        <div className="relative z-10 flex flex-col items-center justify-center text-center max-w-5xl px-6 mt-16 md:mt-24 lg:mt-32">
+          <h4 className="text-[10px] sm:text-xs md:text-sm font-mono tracking-[0.3em] text-white/60 mb-4 md:mb-6 uppercase drop-shadow-md">
             Project {String(index).padStart(2, "0")} {"//"} {category}
           </h4>
-          <h3 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-tight text-white mb-12 drop-shadow-lg leading-tight">
+          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-light tracking-tight text-white mb-8 md:mb-12 drop-shadow-lg leading-tight px-2">
             {title}
           </h3>
           <div className="pointer-events-auto z-20">
-            <button className="text-sm font-mono tracking-widest text-white border border-white/50 px-8 py-4 rounded-full hover:bg-white hover:text-black transition-colors duration-300 shadow-xl backdrop-blur-md bg-black/20">
+            <button className="text-xs sm:text-sm font-mono tracking-widest text-white border border-white/50 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full hover:bg-white hover:text-black transition-colors duration-300 shadow-xl backdrop-blur-md bg-black/20">
               VIEW CASE STUDY
             </button>
           </div>
