@@ -85,9 +85,10 @@ export default function ScrollyCanvas() {
           const ctx = canvasRef.current.getContext("2d");
           const curProgress = smoothProgress.get();
           const target = Math.min(frameCount - 1, Math.max(0, Math.floor(curProgress * frameCount)));
-          if (ctx && loadedImages[target]) {
-            lastDrawnImageRef.current = loadedImages[target];
-            drawImageCover(ctx, canvasRef.current, loadedImages[target]!);
+          const targetImg = loadedImages[target];
+          if (ctx && targetImg) {
+            lastDrawnImageRef.current = targetImg;
+            drawImageCover(ctx, canvasRef.current, targetImg);
           }
         }
       };
@@ -119,8 +120,9 @@ export default function ScrollyCanvas() {
       // If exact frame is still downloading, fall back to closest loaded frame
       if (!imgToDraw || !imgToDraw.complete || imgToDraw.naturalWidth === 0) {
         for (let f = targetFrame - 1; f >= 0; f--) {
-          if (loadedList[f] && loadedList[f].complete && loadedList[f].naturalWidth > 0) {
-            imgToDraw = loadedList[f];
+          const candidate = loadedList[f];
+          if (candidate && candidate.complete && candidate.naturalWidth > 0) {
+            imgToDraw = candidate;
             break;
           }
         }
