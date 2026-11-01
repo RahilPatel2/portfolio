@@ -19,7 +19,7 @@ export default function Certifications() {
   });
 
   return (
-    <section id="credentials" ref={containerRef} className="relative w-full pt-[300px] pb-40 md:pb-64 bg-black text-white overflow-hidden flex flex-col items-center">
+    <section id="credentials" ref={containerRef} className="relative w-full pt-20 md:pt-[300px] pb-28 md:pb-64 bg-black text-white overflow-hidden flex flex-col items-center">
       <div className="max-w-5xl mx-auto px-8 md:px-6 w-full relative z-10">
         
         {/* Centered Section Title */}

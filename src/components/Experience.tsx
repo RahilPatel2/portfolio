@@ -35,15 +35,14 @@ export default function Experience() {
       id="experience" 
       ref={containerRef} 
       className="relative w-full pb-[200px] md:pb-64 bg-black text-white overflow-hidden exp-section"
-      style={{ paddingTop: "300px" }}
     >
       <style dangerouslySetInnerHTML={{__html: `
-        .exp-section { padding-left: 28px; padding-right: 28px; }
+        .exp-section { padding-left: 28px; padding-right: 28px; padding-top: 100px; }
         @media (min-width: 768px) {
-          .exp-section { padding-left: 48px; padding-right: 48px; }
+          .exp-section { padding-left: 48px; padding-right: 48px; padding-top: 300px; }
         }
         @media (min-width: 1024px) {
-          .exp-section { padding-left: 120px; padding-right: 120px; }
+          .exp-section { padding-left: 120px; padding-right: 120px; padding-top: 300px; }
         }
       `}} />
       

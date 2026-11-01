@@ -41,8 +41,8 @@ export default function Projects() {
   const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
   return (
     <section id="work" className="relative w-full bg-black text-white z-20">
-      {/* 300px physical spacer to guarantee separation from Technology Stack */}
-      <div className="w-full shrink-0" style={{ height: "300px" }} />
+      {/* Responsive spacer to guarantee separation from Technology Stack */}
+      <div className="w-full shrink-0 h-28 md:h-[300px]" />
       
       {/* Centered Section Title */}
       <motion.div 
@@ -82,7 +82,7 @@ export default function Projects() {
         />
       </motion.div>
       
-      <div className="relative z-10 w-full" style={{ marginTop: "-50vh" }}>
+      <div className="relative z-10 w-full mt-12 md:mt-[-50vh]">
         {projects.map((project, i) => (
           <ProjectScene 
             key={i}

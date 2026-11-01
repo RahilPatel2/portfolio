@@ -61,7 +61,7 @@ export default function FinalScene() {
   };
 
   return (
-    <section id="contact" ref={containerRef} className="relative w-full h-screen bg-black overflow-hidden flex flex-col items-center justify-center mt-32 md:mt-32">
+    <section id="contact" ref={containerRef} className="relative w-full min-h-screen md:h-screen bg-black overflow-hidden flex flex-col items-center justify-center py-20 md:py-0 mt-16 md:mt-32">
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes ambientFloat {
           0% { transform: translateY(-15px); }

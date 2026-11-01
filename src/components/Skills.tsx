@@ -24,8 +24,8 @@ export default function Skills() {
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.01] to-transparent pointer-events-none" />
 
       <div className="max-w-6xl mx-auto w-full px-6 z-10 relative">
-        {/* 200px empty space above the heading */}
-        <div className="w-full shrink-0" style={{ height: "200px" }} />
+        {/* Responsive breathing space above the heading */}
+        <div className="w-full shrink-0 h-24 md:h-[200px]" />
         
         {/* Centered Section Title */}
         <motion.div 
@@ -118,7 +118,7 @@ export default function Skills() {
         </div>
         
         {/* Mobile ONLY bottom breathing space */}
-        <div className="w-full shrink-0 h-[200px] md:h-0" />
+        <div className="w-full shrink-0 h-16 md:h-0" />
       </div>
     </section>
   );

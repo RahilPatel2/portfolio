@@ -7,20 +7,13 @@ export default function CustomCursor() {
   const ringRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Only run on desktop devices with a mouse
-    if (window.matchMedia("(hover: none) or (pointer: coarse)").matches) {
-      return;
-    }
-
     const dot = dotRef.current;
     const ring = ringRef.current;
     if (!dot || !ring) return;
 
-    // Mouse coordinates (target)
     let mouseX = -100;
     let mouseY = -100;
 
-    // Ring smoothed coordinates (lerp)
     let ringX = -100;
     let ringY = -100;
 
@@ -28,12 +21,15 @@ export default function CustomCursor() {
     let isHovered = false;
     let isClicking = false;
     let isTextHovered = false;
+    let isTouchActive = false;
 
     let rafId: number;
     let isFirstMove = true;
 
     // Direct event listener for zero-latency tracking
     const onMouseMove = (e: MouseEvent) => {
+      if (isTouchActive) return;
+
       mouseX = e.clientX;
       mouseY = e.clientY;
 
@@ -52,20 +48,31 @@ export default function CustomCursor() {
       // Check target element for interactive states
       const target = e.target as HTMLElement | null;
       if (target) {
-        const isInteractive = Boolean(
+        isHovered = Boolean(
           target.closest("a, button, [role='button'], input[type='submit'], .cursor-pointer")
         );
-        isHovered = isInteractive;
-
-        const isInput = Boolean(
+        isTextHovered = Boolean(
           target.closest("input, textarea, [contenteditable='true']")
         );
-        isTextHovered = isInput;
       }
     };
 
+    const onTouchStart = () => {
+      isTouchActive = true;
+      isVisible = false;
+      dot.style.opacity = "0";
+      ring.style.opacity = "0";
+    };
+
+    const onTouchEnd = () => {
+      // Re-enable mouse visibility only after touch finishes
+      setTimeout(() => {
+        isTouchActive = false;
+      }, 500);
+    };
+
     const onMouseDown = () => {
-      isClicking = true;
+      if (!isTouchActive) isClicking = true;
     };
 
     const onMouseUp = () => {
@@ -79,26 +86,27 @@ export default function CustomCursor() {
     };
 
     const onMouseEnter = () => {
-      isVisible = true;
-      dot.style.opacity = "1";
-      ring.style.opacity = "1";
+      if (!isTouchActive) {
+        isVisible = true;
+        dot.style.opacity = "1";
+        ring.style.opacity = "1";
+      }
     };
 
     // Ultra-smooth 60-120fps render loop
     const animate = () => {
-      if (isVisible) {
+      if (isVisible && !isTouchActive) {
         // Dot moves with ZERO latency (instantaneous native speed)
         dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%) scale(${
           isTextHovered ? 0 : isHovered ? 0.6 : 1
         })`;
 
         // Ring smoothly glides with buttery inertia
-        // Lerp factor of 0.22 delivers optimal responsiveness with silky trailing
         const lerpFactor = 0.22;
         ringX += (mouseX - ringX) * lerpFactor;
         ringY += (mouseY - ringY) * lerpFactor;
 
-        // Slight velocity stretch for organic liquid feel
+        // Velocity stretch for organic fluid feel
         const dx = mouseX - ringX;
         const dy = mouseY - ringY;
         const distance = Math.sqrt(dx * dx + dy * dy);
@@ -127,6 +135,8 @@ export default function CustomCursor() {
     window.addEventListener("mousemove", onMouseMove, { passive: true });
     window.addEventListener("mousedown", onMouseDown);
     window.addEventListener("mouseup", onMouseUp);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchend", onTouchEnd, { passive: true });
     document.documentElement.addEventListener("mouseleave", onMouseLeave);
     document.documentElement.addEventListener("mouseenter", onMouseEnter);
 
@@ -136,6 +146,8 @@ export default function CustomCursor() {
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mousedown", onMouseDown);
       window.removeEventListener("mouseup", onMouseUp);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchend", onTouchEnd);
       document.documentElement.removeEventListener("mouseleave", onMouseLeave);
       document.documentElement.removeEventListener("mouseenter", onMouseEnter);
       cancelAnimationFrame(rafId);

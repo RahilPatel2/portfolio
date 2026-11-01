@@ -23,7 +23,7 @@ export default function ProjectScene({ index, title, category, color }: ProjectS
   const opacity = useTransform(smoothProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0]);
 
   return (
-    <div ref={containerRef} className="relative w-full h-[200vh] flex items-center justify-center">
+    <div ref={containerRef} className="relative w-full h-[130vh] md:h-[200vh] flex items-center justify-center">
       <motion.div 
         className="sticky top-0 w-full h-screen flex flex-col items-center justify-center overflow-hidden"
         style={{ opacity }}
