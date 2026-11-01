@@ -378,11 +378,11 @@ export default function ScrollyCanvas() {
         <motion.div style={{ opacity: m4Opacity, y: m4Y, scale: m4Scale, filter: m4Blur }} className="hidden lg:flex absolute inset-0 flex-col items-center justify-center pointer-events-none text-white text-center px-6">
           <h2 className="text-4xl lg:text-8xl font-light tracking-tight mb-8 drop-shadow-[0_4px_24px_rgba(0,0,0,0.8)] max-w-4xl">I BUILD DIGITAL EXPERIENCES</h2>
           <div className="flex flex-wrap items-center justify-center gap-3 lg:gap-6 text-white/60 font-mono tracking-widest text-xs lg:text-sm drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]">
-            <span>SNAP & GET</span>
+            <span>AI PLANNER SPECIFICATION</span>
             <span className="hidden lg:inline-block w-1 h-1 bg-white/20 rounded-full" />
-            <span>COLLABORATIVE WHITEBOARD</span>
+            <span>DEPLOYX</span>
             <span className="hidden lg:inline-block w-1 h-1 bg-white/20 rounded-full" />
-            <span>WEATHER DASHBOARD</span>
+            <span>CODE LINUX AI</span>
           </div>
         </motion.div>
         {/* Mobile & Tablet */}
@@ -390,11 +390,11 @@ export default function ScrollyCanvas() {
           <div className="flex flex-col items-center max-w-sm">
             <h2 className="text-3xl sm:text-5xl font-light tracking-tight mb-6 drop-shadow-[0_4px_20px_rgba(0,0,0,0.9)] leading-snug">I BUILD DIGITAL EXPERIENCES</h2>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-4 md:gap-6 text-white/60 font-mono tracking-widest text-[11px] sm:text-xs drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
-              <span>SNAP & GET</span>
+              <span>AI PLANNER SPECIFICATION</span>
               <span className="hidden sm:inline-block w-1 h-1 bg-white/20 rounded-full" />
-              <span>COLLABORATIVE WHITEBOARD</span>
+              <span>DEPLOYX</span>
               <span className="hidden sm:inline-block w-1 h-1 bg-white/20 rounded-full" />
-              <span>WEATHER DASHBOARD</span>
+              <span>CODE LINUX AI</span>
             </div>
           </div>
         </motion.div>
