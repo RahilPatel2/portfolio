@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ProjectData } from "@/data/projects";
 import RoamlyVisual from "@/components/project-visuals/RoamlyVisual";
@@ -33,7 +33,11 @@ import {
   DollarSign,
   Navigation as NavIcon,
   CreditCard,
-  ArrowDown
+  ArrowDown,
+  Layers,
+  Cpu,
+  FileCode,
+  CheckCircle2
 } from "lucide-react";
 
 interface CaseStudyProps {
@@ -57,7 +61,7 @@ function getFeatureIcon(iconName: string) {
     case "AlertTriangle": return <AlertTriangle className="w-5 h-5" />;
     case "Code2": return <Code2 className="w-5 h-5" />;
     case "Bot": return <Bot className="w-5 h-5" />;
-    case "Cpu": return <Bot className="w-5 h-5" />;
+    case "Cpu": return <Cpu className="w-5 h-5" />;
     case "TrendingUp": return <TrendingUp className="w-5 h-5" />;
     case "Workflow": return <Workflow className="w-5 h-5" />;
     case "Box": return <Box className="w-5 h-5" />;
@@ -68,12 +72,7 @@ function getFeatureIcon(iconName: string) {
 
 export default function CaseStudyExperience({ project }: CaseStudyProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const heroRef = useRef<HTMLDivElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
+  const [activeStudioTab, setActiveStudioTab] = useState<"runtime" | "blueprint" | "specs">("runtime");
 
   const renderVisualComponent = (interactive = true) => {
     if (project.slug === "ai-planner-specification") {
@@ -148,20 +147,22 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
       </nav>
 
       {/* =========================================================
-          CHAPTER 00: FULL-VIEWPORT CINEMATIC HERO
-          Spacious keynote presentation with dedicated breathing room
+          HERO SECTION: IMMENSE BREATHING ROOM & KEYNOTE PACING
+          Clean vertical hierarchy: Badge -> Title -> Subtitle -> CTAs -> Metrics HUD -> Scroll Prompt
       ========================================================= */}
-      <section 
-        ref={heroRef}
-        className="relative w-full min-h-screen flex flex-col justify-center items-center text-center px-6 lg:px-12 pt-32 pb-24"
-      >
+      <section className="relative w-full min-h-screen flex flex-col justify-between items-center text-center px-6 lg:px-12 pt-36 pb-20">
+        
+        {/* Top Space Reserve */}
+        <div className="w-full shrink-0 h-4" />
+
+        {/* Center Main Content Box */}
         <motion.div
           initial={{ opacity: 0, y: 30, filter: "blur(12px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-5xl mx-auto flex flex-col items-center"
         >
-          {/* Top Telemetry Badge */}
+          {/* Top Status HUD Badge */}
           <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
             <span className={`px-4 py-1.5 rounded-full text-xs font-mono tracking-widest uppercase border ${project.badgeStyle} flex items-center gap-2`}>
               <span className="w-2 h-2 rounded-full bg-current animate-ping" />
@@ -177,13 +178,13 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             {project.name}
           </h1>
 
-          {/* Tagline Narrative */}
+          {/* Subtitle Narrative */}
           <p className="text-lg sm:text-2xl md:text-3xl font-light text-white/75 max-w-3xl mb-12 leading-relaxed font-sans">
             {project.tagline}
           </p>
 
-          {/* Action Cockpit Buttons — Placed right below tagline with generous space */}
-          <div className="flex flex-wrap items-center justify-center gap-5 mb-16">
+          {/* Action Cockpit Buttons — Generously spaced */}
+          <div className="flex flex-wrap items-center justify-center gap-5 mb-14">
             <a
               href={project.liveUrl}
               target="_blank"
@@ -207,7 +208,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
           </div>
 
           {/* Key Metrics HUD Strip — Positioned with dedicated vertical margins */}
-          <div className="w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl mb-16 shadow-2xl">
+          <div className="w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl mb-4 shadow-2xl">
             {project.metrics.map((metric, i) => (
               <div key={i} className="flex flex-col items-center justify-center p-3 text-center">
                 <span className="text-2xl sm:text-3xl lg:text-4xl font-light font-mono text-white mb-1.5">
@@ -219,24 +220,25 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
               </div>
             ))}
           </div>
+        </motion.div>
 
-          {/* Scroll Down Prompt */}
-          <motion.div 
-            animate={{ y: [0, 8, 0] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="flex flex-col items-center gap-2 text-[11px] font-mono tracking-widest text-white/40 uppercase"
-          >
-            <span>SCROLL DOWN TO EXPLORE SYSTEM ARCHITECTURE</span>
-            <ArrowDown className="w-3.5 h-3.5 text-white/40" />
-          </motion.div>
+        {/* Scroll Prompt Anchor at Viewport Base */}
+        <motion.div 
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="flex flex-col items-center gap-2 text-[11px] font-mono tracking-widest text-white/40 uppercase mt-8 shrink-0"
+        >
+          <span>SCROLL DOWN TO EXPLORE ARCHITECTURE</span>
+          <ArrowDown className="w-3.5 h-3.5 text-white/40" />
         </motion.div>
       </section>
 
       {/* =========================================================
-          CHAPTER 01: DEDICATED LIVE ARCHITECTURE SIMULATOR
-          Occupies full screen height with generous margins
+          UNIFIED ARCHITECTURE & RUNTIME STUDIO (CHAPTER 01)
+          Combines the Interactive Simulator, Blueprint, and Specs
+          into ONE cohesive, non-repeating command center!
       ========================================================= */}
-      <section className="relative w-full min-h-screen flex flex-col justify-center items-center py-36 md:py-48 border-t border-white/10 bg-[#06080d]/90">
+      <section className="relative w-full py-36 md:py-48 border-t border-white/10 bg-[#06080d]/90">
         <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
           
           {/* Chapter Header */}
@@ -245,31 +247,64 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col items-center text-center mb-16 md:mb-20"
+            className="flex flex-col items-center text-center mb-12 md:mb-16"
           >
             <span className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-4 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              01 // LIVE ARCHITECTURE SIMULATOR
+              01 // ARCHITECTURE &amp; RUNTIME STUDIO
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-white mb-4">
-              Interactive Runtime Console
+              System Architecture &amp; Console
             </h2>
             <p className="text-sm sm:text-base text-white/60 max-w-xl font-sans font-light leading-relaxed">
-              Observe real-time execution telemetry, inspect state transitions, and test active pipeline flows inside the simulated hardware container below.
+              Explore the live execution environment, architectural blueprint, and technical specifications via the interactive studio below.
             </p>
           </motion.div>
 
-          {/* Hardware Frame Container */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-5xl mx-auto"
-          >
+          {/* Interactive Studio Console Tabs */}
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-8">
+            <button
+              onClick={() => setActiveStudioTab("runtime")}
+              className={`px-5 py-2.5 rounded-full text-xs font-mono tracking-wider transition-all flex items-center gap-2 ${
+                activeStudioTab === "runtime"
+                  ? "bg-white text-black font-medium shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                  : "bg-white/[0.03] text-white/60 hover:text-white border border-white/10 hover:border-white/20"
+              }`}
+            >
+              <Terminal className="w-3.5 h-3.5" />
+              <span>LIVE RUNTIME CONSOLE</span>
+            </button>
+
+            <button
+              onClick={() => setActiveStudioTab("blueprint")}
+              className={`px-5 py-2.5 rounded-full text-xs font-mono tracking-wider transition-all flex items-center gap-2 ${
+                activeStudioTab === "blueprint"
+                  ? "bg-white text-black font-medium shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                  : "bg-white/[0.03] text-white/60 hover:text-white border border-white/10 hover:border-white/20"
+              }`}
+            >
+              <Workflow className="w-3.5 h-3.5" />
+              <span>SYSTEM BLUEPRINT</span>
+            </button>
+
+            <button
+              onClick={() => setActiveStudioTab("specs")}
+              className={`px-5 py-2.5 rounded-full text-xs font-mono tracking-wider transition-all flex items-center gap-2 ${
+                activeStudioTab === "specs"
+                  ? "bg-white text-black font-medium shadow-[0_0_20px_rgba(255,255,255,0.2)]"
+                  : "bg-white/[0.03] text-white/60 hover:text-white border border-white/10 hover:border-white/20"
+              }`}
+            >
+              <Cpu className="w-3.5 h-3.5" />
+              <span>SPECIFICATIONS</span>
+            </button>
+          </div>
+
+          {/* Dynamic Studio Content Frame */}
+          <div className="relative w-full max-w-5xl mx-auto">
             {/* Ambient Dark Glow */}
             <div 
-              className="absolute -inset-6 rounded-3xl blur-3xl pointer-events-none opacity-40"
+              className="absolute -inset-6 rounded-3xl blur-3xl pointer-events-none opacity-40 transition-all duration-700"
               style={{ background: project.darkGlow }}
             />
 
@@ -280,140 +315,101 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
                 borderColor: project.darkBorder 
               }}
             >
-              {renderVisualComponent(true)}
-            </div>
-          </motion.div>
+              <AnimatePresence mode="wait">
+                {activeStudioTab === "runtime" && (
+                  <motion.div
+                    key="runtime"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -15 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    {renderVisualComponent(true)}
+                  </motion.div>
+                )}
 
-        </div>
-      </section>
+                {activeStudioTab === "blueprint" && (
+                  <motion.div
+                    key="blueprint"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -15 }}
+                    transition={{ duration: 0.3 }}
+                    className="p-8 sm:p-12 space-y-6"
+                  >
+                    <div className="p-6 sm:p-8 rounded-xl bg-white/[0.02] border border-white/10">
+                      <h4 className="text-sm font-mono tracking-wider text-white uppercase mb-3 flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
+                        What is {project.name}?
+                      </h4>
+                      <p className="text-white/75 leading-relaxed text-base font-light font-sans">{project.overview.what}</p>
+                    </div>
 
-      {/* =========================================================
-          CHAPTER 02: SYSTEM OVERVIEW & ARCHITECTURAL BLUEPRINT
-          Occupies full screen height with generous margins
-      ========================================================= */}
-      <section className="relative w-full min-h-screen flex flex-col justify-center items-center py-36 md:py-48 border-t border-white/10 bg-[#05070a]">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
-          
-          {/* Chapter Header */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.8 }}
-            className="flex flex-col items-center text-center mb-16 md:mb-20"
-          >
-            <span className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-4">
-              02 // ENGINEERING BLUEPRINT
-            </span>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-white mb-4">
-              Architectural Rationale &amp; Overview
-            </h2>
-            <p className="text-sm sm:text-base text-white/60 max-w-xl font-sans font-light leading-relaxed">
-              An engineering audit of the fundamental challenges, system specifications, and core rationale behind {project.name}.
-            </p>
-          </motion.div>
+                    <div className="p-6 sm:p-8 rounded-xl bg-white/[0.02] border border-white/10">
+                      <h4 className="text-sm font-mono tracking-wider text-white uppercase mb-3 flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
+                        Why It Was Developed
+                      </h4>
+                      <p className="text-white/75 leading-relaxed text-base font-light font-sans">{project.overview.why}</p>
+                    </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-            
-            {/* Left Column: Metadata & System Specs Card */}
-            <motion.div 
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-10%" }}
-              transition={{ duration: 0.8 }}
-              className="lg:col-span-5 p-8 rounded-2xl bg-[#0c1017]/80 border border-white/10 shadow-2xl backdrop-blur-xl"
-            >
-              <span className="text-[11px] font-mono tracking-widest text-white/40 uppercase block mb-4">
-                SPECIFICATION MATRIX
-              </span>
-              <h3 className="text-xl font-medium text-white mb-6">
-                System Telemetry &amp; Specs
-              </h3>
+                    <div className="p-6 sm:p-8 rounded-xl bg-white/[0.02] border border-white/10">
+                      <h4 className="text-sm font-mono tracking-wider text-white uppercase mb-3 flex items-center gap-2">
+                        <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
+                        The Problem It Solves
+                      </h4>
+                      <p className="text-white/75 leading-relaxed text-base font-light font-sans">{project.overview.problem}</p>
+                    </div>
+                  </motion.div>
+                )}
 
-              <div className="space-y-4 text-xs font-mono text-white/60 border-t border-white/10 pt-6">
-                <div className="flex justify-between py-2 border-b border-white/5">
-                  <span className="text-white/40">Architecture Role:</span>
-                  <span className="text-white font-medium text-right">{project.role}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-white/5">
-                  <span className="text-white/40">Production Year:</span>
-                  <span className="text-white font-medium">{project.year}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-white/5">
-                  <span className="text-white/40">Category:</span>
-                  <span className="text-white font-medium text-right">{project.category}</span>
-                </div>
-                <div className="flex justify-between py-2 border-b border-white/5">
-                  <span className="text-white/40">Internal Codename:</span>
-                  <span className="text-white font-medium">{project.internalCodeName}</span>
-                </div>
-                <div className="flex justify-between py-2">
-                  <span className="text-white/40">Edge Target:</span>
-                  <span className="text-emerald-400 font-medium">Worldwide Low-Latency Edge</span>
-                </div>
-              </div>
-            </motion.div>
+                {activeStudioTab === "specs" && (
+                  <motion.div
+                    key="specs"
+                    initial={{ opacity: 0, y: 15 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -15 }}
+                    transition={{ duration: 0.3 }}
+                    className="p-8 sm:p-12 space-y-8"
+                  >
+                    {/* Telemetry Matrix Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10 flex justify-between items-center text-xs font-mono">
+                        <span className="text-white/40">Architecture Role:</span>
+                        <span className="text-white font-medium">{project.role}</span>
+                      </div>
+                      <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10 flex justify-between items-center text-xs font-mono">
+                        <span className="text-white/40">Production Year:</span>
+                        <span className="text-white font-medium">{project.year}</span>
+                      </div>
+                      <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10 flex justify-between items-center text-xs font-mono">
+                        <span className="text-white/40">Platform Category:</span>
+                        <span className="text-white font-medium">{project.category}</span>
+                      </div>
+                      <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10 flex justify-between items-center text-xs font-mono">
+                        <span className="text-white/40">Internal Codename:</span>
+                        <span className="text-white font-medium">{project.internalCodeName}</span>
+                      </div>
+                    </div>
 
-            {/* Right Column: In-depth Technical Narrative */}
-            <div className="lg:col-span-7 space-y-6">
-              
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-10%" }}
-                transition={{ duration: 0.6 }}
-                className="p-8 rounded-2xl bg-[#0c1017]/60 border border-white/10 hover:border-white/20 transition-all shadow-xl"
-              >
-                <h4 className="text-sm font-mono tracking-wider text-white uppercase mb-3 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
-                  What is {project.name}?
-                </h4>
-                <p className="text-white/75 leading-relaxed text-base sm:text-lg font-light font-sans">{project.overview.what}</p>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-10%" }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="p-8 rounded-2xl bg-[#0c1017]/60 border border-white/10 hover:border-white/20 transition-all shadow-xl"
-              >
-                <h4 className="text-sm font-mono tracking-wider text-white uppercase mb-3 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
-                  Why It Was Developed
-                </h4>
-                <p className="text-white/75 leading-relaxed text-base sm:text-lg font-light font-sans">{project.overview.why}</p>
-              </motion.div>
-
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-10%" }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="p-8 rounded-2xl bg-[#0c1017]/60 border border-white/10 hover:border-white/20 transition-all shadow-xl"
-              >
-                <h4 className="text-sm font-mono tracking-wider text-white uppercase mb-3 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
-                  The Problem It Solves
-                </h4>
-                <p className="text-white/75 leading-relaxed text-base sm:text-lg font-light font-sans">{project.overview.problem}</p>
-              </motion.div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
-                <div className="p-7 rounded-2xl bg-[#0c1017]/50 border border-white/10 shadow-lg">
-                  <h5 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-2">
-                    Target Demographics
-                  </h5>
-                  <p className="text-sm text-white/75 font-light leading-relaxed">{project.overview.audience}</p>
-                </div>
-                <div className="p-7 rounded-2xl bg-[#0c1017]/50 border border-white/10 shadow-lg">
-                  <h5 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-2">
-                    Architectural Edge
-                  </h5>
-                  <p className="text-sm text-white/75 font-light leading-relaxed">{project.overview.differentiator}</p>
-                </div>
-              </div>
-
+                    {/* Target Audience & Differentiator */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div className="p-6 rounded-xl bg-white/[0.02] border border-white/10">
+                        <h5 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-2">
+                          Target Demographics
+                        </h5>
+                        <p className="text-sm text-white/75 font-light leading-relaxed">{project.overview.audience}</p>
+                      </div>
+                      <div className="p-6 rounded-xl bg-white/[0.02] border border-white/10">
+                        <h5 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-2">
+                          Architectural Moat
+                        </h5>
+                        <p className="text-sm text-white/75 font-light leading-relaxed">{project.overview.differentiator}</p>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
 
@@ -421,9 +417,9 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
       </section>
 
       {/* =========================================================
-          CHAPTER 03: PLATFORM CAPABILITIES BENTO GRID
+          CHAPTER 02: CORE PLATFORM CAPABILITIES BENTO GRID
       ========================================================= */}
-      <section className="relative w-full min-h-screen flex flex-col justify-center items-center py-36 md:py-48 border-t border-white/10 bg-[#06080d]/90">
+      <section className="relative w-full py-36 md:py-48 border-t border-white/10 bg-[#05070a]">
         <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
           
           {/* Chapter Header */}
@@ -435,7 +431,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             className="flex flex-col items-center text-center mb-16 md:mb-20"
           >
             <span className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-4">
-              03 // CORE CAPABILITIES
+              02 // CORE CAPABILITIES
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-white mb-4">
               Engineered Features &amp; Modules
@@ -445,7 +441,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             </p>
           </motion.div>
 
-          {/* Spacious Bento Grid with Hover Spotlight */}
+          {/* Spacious Bento Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {project.features.map((feature, i) => (
               <motion.div 
@@ -482,9 +478,9 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
       </section>
 
       {/* =========================================================
-          CHAPTER 04: VISUAL ARCHITECTURE & INTERFACE GALLERY
+          CHAPTER 03: VISUAL ARCHITECTURE & INTERFACE GALLERY
       ========================================================= */}
-      <section className="relative w-full min-h-screen flex flex-col justify-center items-center py-36 md:py-48 border-t border-white/10 bg-[#05070a]">
+      <section className="relative w-full py-36 md:py-48 border-t border-white/10 bg-[#06080d]/90">
         <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
           
           {/* Chapter Header */}
@@ -496,7 +492,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             className="flex flex-col items-center text-center mb-16 md:mb-20"
           >
             <span className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-4">
-              04 // VISUAL ARCHITECTURE
+              03 // VISUAL ARCHITECTURE
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-white mb-4">
               Interface Gallery &amp; Inspector
@@ -526,9 +522,9 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
       </section>
 
       {/* =========================================================
-          CHAPTER 05: INFRASTRUCTURE & DEPENDENCIES
+          CHAPTER 04: INFRASTRUCTURE & DEPENDENCIES
       ========================================================= */}
-      <section className="relative w-full min-h-screen flex flex-col justify-center items-center py-36 md:py-48 border-t border-white/10 bg-[#06080d]/90">
+      <section className="relative w-full py-36 md:py-48 border-t border-white/10 bg-[#05070a]">
         <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
           
           {/* Chapter Header */}
@@ -540,7 +536,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             className="flex flex-col items-center text-center mb-16 md:mb-20"
           >
             <span className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-4">
-              05 // INFRASTRUCTURE &amp; DEPENDENCIES
+              04 // INFRASTRUCTURE &amp; DEPENDENCIES
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-white mb-4">
               Technology Stack Breakdown
@@ -585,9 +581,9 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
       </section>
 
       {/* =========================================================
-          CHAPTER 06: DEPLOYMENT ACCESS & CODEBASE (CLOSING CTA)
+          CHAPTER 05: DEPLOYMENT ACCESS & CODEBASE (CLOSING CTA)
       ========================================================= */}
-      <section className="relative w-full py-36 md:py-48 border-t border-white/10 bg-[#05070a]">
+      <section className="relative w-full py-36 md:py-48 border-t border-white/10 bg-[#06080d]/90">
         <div className="max-w-5xl mx-auto px-6 lg:px-12">
           
           <div 
@@ -605,7 +601,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
 
             <div className="relative z-10">
               <span className="text-xs font-mono tracking-widest text-white/50 uppercase block mb-4">
-                06 // ACCESS &amp; PRODUCTION RUNTIME
+                05 // ACCESS &amp; PRODUCTION RUNTIME
               </span>
               <h2 className="text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-white mb-6">
                 Experience {project.name}
@@ -644,9 +640,9 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
       </section>
 
       {/* =========================================================
-          CHAPTER 07: PREVIOUS / NEXT CASE STUDY NAVIGATION
+          CHAPTER 06: PREVIOUS / NEXT CASE STUDY NAVIGATION
       ========================================================= */}
-      <footer className="relative w-full py-24 sm:py-32 border-t border-white/10 bg-[#06080d]">
+      <footer className="relative w-full py-24 sm:py-32 border-t border-white/10 bg-[#05070a]">
         <div className="max-w-6xl mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {/* Previous Project Card */}
