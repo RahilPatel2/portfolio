@@ -35,6 +35,11 @@ export interface ProjectData {
   gradient: string;
   accentGlow: string;
   borderColor: string;
+  accentColor: string;
+  darkBg: string;
+  darkBorder: string;
+  darkGlow: string;
+  badgeStyle: string;
   technologies: string[];
   techStackDetailed: TechStackItem[];
   overview: {
@@ -76,10 +81,15 @@ export const projectsData: ProjectData[] = [
     role: "Full Stack Engineer & Cloudflare Architect",
     liveUrl: "https://roamly-travel.vercel.app", // Placeholder centralized URL
     githubUrl: "https://github.com/RahilPatel2/Roamly",
-    color: "#FFFFFF",
-    gradient: "from-white/[0.04] to-transparent",
-    accentGlow: "rgba(255, 255, 255, 0.04)",
-    borderColor: "rgba(255, 255, 255, 0.12)",
+    color: "#f59e0b",
+    gradient: "from-amber-950/20 via-black to-black",
+    accentGlow: "rgba(245, 158, 11, 0.12)",
+    borderColor: "rgba(245, 158, 11, 0.2)",
+    accentColor: "#f59e0b",
+    darkBg: "#0d0c0a",
+    darkBorder: "rgba(245, 158, 11, 0.22)",
+    darkGlow: "rgba(245, 158, 11, 0.12)",
+    badgeStyle: "bg-amber-950/40 text-amber-200 border-amber-800/40",
     technologies: [
       "React",
       "Next.js 16",
@@ -212,10 +222,15 @@ export const projectsData: ProjectData[] = [
     role: "Lead Full Stack & Systems Architect",
     liveUrl: "https://deployx-platform.vercel.app", // Placeholder centralized URL
     githubUrl: "https://github.com/RahilPatel2/DeployX",
-    color: "#FFFFFF",
-    gradient: "from-white/[0.04] to-transparent",
-    accentGlow: "rgba(255, 255, 255, 0.04)",
-    borderColor: "rgba(255, 255, 255, 0.12)",
+    color: "#38bdf8",
+    gradient: "from-sky-950/20 via-black to-black",
+    accentGlow: "rgba(56, 189, 248, 0.14)",
+    borderColor: "rgba(56, 189, 248, 0.22)",
+    accentColor: "#38bdf8",
+    darkBg: "#080c14",
+    darkBorder: "rgba(56, 189, 248, 0.24)",
+    darkGlow: "rgba(56, 189, 248, 0.14)",
+    badgeStyle: "bg-sky-950/40 text-sky-200 border-sky-800/40",
     technologies: [
       "Next.js",
       "React",
@@ -347,10 +362,15 @@ export const projectsData: ProjectData[] = [
     role: "Lead Full Stack & AI Systems Architect",
     liveUrl: "https://codelynx-ai.vercel.app", // Placeholder centralized URL
     githubUrl: "https://github.com/RahilPatel2/codelynx-ai",
-    color: "#FFFFFF",
-    gradient: "from-white/[0.04] to-transparent",
-    accentGlow: "rgba(255, 255, 255, 0.04)",
-    borderColor: "rgba(255, 255, 255, 0.12)",
+    color: "#10b981",
+    gradient: "from-emerald-950/20 via-black to-black",
+    accentGlow: "rgba(16, 185, 129, 0.12)",
+    borderColor: "rgba(16, 185, 129, 0.2)",
+    accentColor: "#10b981",
+    darkBg: "#070e0a",
+    darkBorder: "rgba(16, 185, 129, 0.22)",
+    darkGlow: "rgba(16, 185, 129, 0.12)",
+    badgeStyle: "bg-emerald-950/40 text-emerald-200 border-emerald-800/40",
     technologies: [
       "React",
       "Next.js",
