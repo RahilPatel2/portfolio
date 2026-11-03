@@ -76,10 +76,10 @@ export const projectsData: ProjectData[] = [
     role: "Full Stack Engineer & Cloudflare Architect",
     liveUrl: "https://roamly-travel.vercel.app", // Placeholder centralized URL
     githubUrl: "https://github.com/RahilPatel2/Roamly",
-    color: "#f59e0b",
-    gradient: "from-amber-500/20 via-orange-500/10 to-transparent",
-    accentGlow: "rgba(245, 158, 11, 0.25)",
-    borderColor: "rgba(245, 158, 11, 0.3)",
+    color: "#FFFFFF",
+    gradient: "from-white/[0.04] to-transparent",
+    accentGlow: "rgba(255, 255, 255, 0.04)",
+    borderColor: "rgba(255, 255, 255, 0.12)",
     technologies: [
       "React",
       "Next.js 16",
@@ -212,10 +212,10 @@ export const projectsData: ProjectData[] = [
     role: "Lead Full Stack & Systems Architect",
     liveUrl: "https://deployx-platform.vercel.app", // Placeholder centralized URL
     githubUrl: "https://github.com/RahilPatel2/DeployX",
-    color: "#06b6d4",
-    gradient: "from-cyan-500/20 via-blue-500/10 to-transparent",
-    accentGlow: "rgba(6, 182, 212, 0.25)",
-    borderColor: "rgba(6, 182, 212, 0.3)",
+    color: "#FFFFFF",
+    gradient: "from-white/[0.04] to-transparent",
+    accentGlow: "rgba(255, 255, 255, 0.04)",
+    borderColor: "rgba(255, 255, 255, 0.12)",
     technologies: [
       "Next.js",
       "React",
@@ -347,10 +347,10 @@ export const projectsData: ProjectData[] = [
     role: "Lead Full Stack & AI Systems Architect",
     liveUrl: "https://codelynx-ai.vercel.app", // Placeholder centralized URL
     githubUrl: "https://github.com/RahilPatel2/codelynx-ai",
-    color: "#a855f7",
-    gradient: "from-purple-500/20 via-fuchsia-500/10 to-transparent",
-    accentGlow: "rgba(168, 85, 247, 0.25)",
-    borderColor: "rgba(168, 85, 247, 0.3)",
+    color: "#FFFFFF",
+    gradient: "from-white/[0.04] to-transparent",
+    accentGlow: "rgba(255, 255, 255, 0.04)",
+    borderColor: "rgba(255, 255, 255, 0.12)",
     technologies: [
       "React",
       "Next.js",

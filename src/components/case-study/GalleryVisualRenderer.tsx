@@ -29,9 +29,9 @@ export default function GalleryVisualRenderer({ project, item, index }: Props) {
   };
 
   const getBadgeIcon = () => {
-    if (project.slug === "ai-planner-specification") return <Map className="w-3.5 h-3.5 text-amber-400" />;
-    if (project.slug === "deployx") return <Terminal className="w-3.5 h-3.5 text-cyan-400" />;
-    return <Code2 className="w-3.5 h-3.5 text-purple-400" />;
+    if (project.slug === "ai-planner-specification") return <Map className="w-3.5 h-3.5 text-white/70" />;
+    if (project.slug === "deployx") return <Terminal className="w-3.5 h-3.5 text-white/70" />;
+    return <Code2 className="w-3.5 h-3.5 text-white/70" />;
   };
 
   return (
