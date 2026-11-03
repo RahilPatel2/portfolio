@@ -43,27 +43,27 @@ interface CaseStudyProps {
 
 function getFeatureIcon(iconName: string) {
   switch (iconName) {
-    case "Compass": return <Compass className="w-5 h-5" />;
-    case "MapPin": return <MapPin className="w-5 h-5" />;
-    case "NavIcon": return <NavIcon className="w-5 h-5" />;
-    case "DollarSign": return <DollarSign className="w-5 h-5" />;
-    case "CreditCard": return <CreditCard className="w-5 h-5" />;
-    case "Lock": return <Lock className="w-5 h-5" />;
-    case "GitBranch": return <Workflow className="w-5 h-5" />;
-    case "Key": return <Key className="w-5 h-5" />;
-    case "RotateCcw": return <RotateCcw className="w-5 h-5" />;
-    case "Terminal": return <Terminal className="w-5 h-5" />;
-    case "LayoutDashboard": return <LayoutDashboard className="w-5 h-5" />;
-    case "Globe": return <Globe className="w-5 h-5" />;
-    case "AlertTriangle": return <AlertTriangle className="w-5 h-5" />;
-    case "Code2": return <Code2 className="w-5 h-5" />;
-    case "Bot": return <Bot className="w-5 h-5" />;
-    case "Cpu": return <Cpu className="w-5 h-5" />;
-    case "TrendingUp": return <TrendingUp className="w-5 h-5" />;
-    case "Workflow": return <Workflow className="w-5 h-5" />;
-    case "Box": return <Box className="w-5 h-5" />;
-    case "History": return <History className="w-5 h-5" />;
-    default: return <Sparkles className="w-5 h-5" />;
+    case "Compass": return <Compass className="w-6 h-6" />;
+    case "MapPin": return <MapPin className="w-6 h-6" />;
+    case "NavIcon": return <NavIcon className="w-6 h-6" />;
+    case "DollarSign": return <DollarSign className="w-6 h-6" />;
+    case "CreditCard": return <CreditCard className="w-6 h-6" />;
+    case "Lock": return <Lock className="w-6 h-6" />;
+    case "GitBranch": return <Workflow className="w-6 h-6" />;
+    case "Key": return <Key className="w-6 h-6" />;
+    case "RotateCcw": return <RotateCcw className="w-6 h-6" />;
+    case "Terminal": return <Terminal className="w-6 h-6" />;
+    case "LayoutDashboard": return <LayoutDashboard className="w-6 h-6" />;
+    case "Globe": return <Globe className="w-6 h-6" />;
+    case "AlertTriangle": return <AlertTriangle className="w-6 h-6" />;
+    case "Code2": return <Code2 className="w-6 h-6" />;
+    case "Bot": return <Bot className="w-6 h-6" />;
+    case "Cpu": return <Cpu className="w-6 h-6" />;
+    case "TrendingUp": return <TrendingUp className="w-6 h-6" />;
+    case "Workflow": return <Workflow className="w-6 h-6" />;
+    case "Box": return <Box className="w-6 h-6" />;
+    case "History": return <History className="w-6 h-6" />;
+    default: return <Sparkles className="w-6 h-6" />;
   }
 }
 
@@ -206,14 +206,14 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             </a>
           </div>
 
-          {/* Centered Flight Instrument Metrics HUD */}
-          <div className="w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-4 p-6 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl mb-12 shadow-2xl">
+          {/* Centered Flight Instrument Metrics HUD with generous internal padding */}
+          <div className="w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-6 p-8 md:p-10 rounded-3xl bg-[#0c1017]/80 border border-white/10 backdrop-blur-2xl mb-12 shadow-2xl">
             {project.metrics.map((metric, i) => (
-              <div key={i} className="flex flex-col items-center justify-center p-3 text-center">
-                <span className="text-2xl sm:text-3xl lg:text-4xl font-light font-mono text-white mb-1.5">
+              <div key={i} className="flex flex-col items-center justify-center p-4 text-center">
+                <span className="text-2xl sm:text-3xl lg:text-4xl font-light font-mono text-white mb-2">
                   {metric.value}
                 </span>
-                <span className="text-[11px] font-mono tracking-wider uppercase text-white/50">
+                <span className="text-xs font-mono tracking-wider uppercase text-white/50">
                   {metric.label}
                 </span>
               </div>
@@ -270,45 +270,45 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
           <div className="w-full shrink-0 h-10 md:h-16" />
 
           {/* Centered Interactive Studio Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10">
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
             <button
               onClick={() => setActiveStudioTab("runtime")}
-              className={`px-5 py-2.5 rounded-full text-xs font-mono tracking-wider transition-all flex items-center gap-2 ${
+              className={`px-6 py-3 rounded-full text-xs font-mono tracking-wider transition-all flex items-center gap-2.5 ${
                 activeStudioTab === "runtime"
                   ? "bg-white text-black font-medium shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   : "bg-white/[0.03] text-white/60 hover:text-white border border-white/10 hover:border-white/20"
               }`}
             >
-              <Terminal className="w-3.5 h-3.5" />
+              <Terminal className="w-4 h-4" />
               <span>LIVE RUNTIME CONSOLE</span>
             </button>
 
             <button
               onClick={() => setActiveStudioTab("blueprint")}
-              className={`px-5 py-2.5 rounded-full text-xs font-mono tracking-wider transition-all flex items-center gap-2 ${
+              className={`px-6 py-3 rounded-full text-xs font-mono tracking-wider transition-all flex items-center gap-2.5 ${
                 activeStudioTab === "blueprint"
                   ? "bg-white text-black font-medium shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   : "bg-white/[0.03] text-white/60 hover:text-white border border-white/10 hover:border-white/20"
               }`}
             >
-              <Workflow className="w-3.5 h-3.5" />
+              <Workflow className="w-4 h-4" />
               <span>SYSTEM BLUEPRINT</span>
             </button>
 
             <button
               onClick={() => setActiveStudioTab("specs")}
-              className={`px-5 py-2.5 rounded-full text-xs font-mono tracking-wider transition-all flex items-center gap-2 ${
+              className={`px-6 py-3 rounded-full text-xs font-mono tracking-wider transition-all flex items-center gap-2.5 ${
                 activeStudioTab === "specs"
                   ? "bg-white text-black font-medium shadow-[0_0_20px_rgba(255,255,255,0.25)]"
                   : "bg-white/[0.03] text-white/60 hover:text-white border border-white/10 hover:border-white/20"
               }`}
             >
-              <Cpu className="w-3.5 h-3.5" />
+              <Cpu className="w-4 h-4" />
               <span>SPECIFICATIONS</span>
             </button>
           </div>
 
-          {/* Centered Studio Hardware Frame */}
+          {/* Centered Studio Hardware Frame with generous internal padding */}
           <div className="relative w-full max-w-5xl mx-auto">
             {/* Ambient Dark Glow */}
             <div 
@@ -317,7 +317,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             />
 
             <div 
-              className="relative rounded-2xl overflow-hidden border shadow-2xl transition-all duration-500"
+              className="relative rounded-3xl overflow-hidden border shadow-2xl transition-all duration-500"
               style={{ 
                 backgroundColor: project.darkBg,
                 borderColor: project.darkBorder 
@@ -343,30 +343,39 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.3 }}
-                    className="p-8 sm:p-12 space-y-6 text-left"
+                    className="p-10 sm:p-16 space-y-8 text-left"
                   >
-                    <div className="p-6 sm:p-8 rounded-xl bg-white/[0.02] border border-white/10">
-                      <h4 className="text-sm font-mono tracking-wider text-white uppercase mb-3 flex items-center gap-2">
+                    <div className="p-8 sm:p-12 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-xl">
+                      <div className="text-xs font-mono tracking-widest text-white/50 uppercase mb-4 flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
+                        Core Identity &amp; Platform Definition
+                      </div>
+                      <h4 className="text-2xl font-medium text-white mb-4">
                         What is {project.name}?
                       </h4>
-                      <p className="text-white/75 leading-relaxed text-base font-light font-sans">{project.overview.what}</p>
+                      <p className="text-white/75 leading-relaxed text-base sm:text-lg font-light font-sans">{project.overview.what}</p>
                     </div>
 
-                    <div className="p-6 sm:p-8 rounded-xl bg-white/[0.02] border border-white/10">
-                      <h4 className="text-sm font-mono tracking-wider text-white uppercase mb-3 flex items-center gap-2">
+                    <div className="p-8 sm:p-12 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-xl">
+                      <div className="text-xs font-mono tracking-widest text-white/50 uppercase mb-4 flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
+                        Engineering Motivation
+                      </div>
+                      <h4 className="text-2xl font-medium text-white mb-4">
                         Why It Was Developed
                       </h4>
-                      <p className="text-white/75 leading-relaxed text-base font-light font-sans">{project.overview.why}</p>
+                      <p className="text-white/75 leading-relaxed text-base sm:text-lg font-light font-sans">{project.overview.why}</p>
                     </div>
 
-                    <div className="p-6 sm:p-8 rounded-xl bg-white/[0.02] border border-white/10">
-                      <h4 className="text-sm font-mono tracking-wider text-white uppercase mb-3 flex items-center gap-2">
+                    <div className="p-8 sm:p-12 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-xl">
+                      <div className="text-xs font-mono tracking-widest text-white/50 uppercase mb-4 flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
+                        Architectural Solution
+                      </div>
+                      <h4 className="text-2xl font-medium text-white mb-4">
                         The Problem It Solves
                       </h4>
-                      <p className="text-white/75 leading-relaxed text-base font-light font-sans">{project.overview.problem}</p>
+                      <p className="text-white/75 leading-relaxed text-base sm:text-lg font-light font-sans">{project.overview.problem}</p>
                     </div>
                   </motion.div>
                 )}
@@ -378,39 +387,39 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.3 }}
-                    className="p-8 sm:p-12 space-y-8 text-left"
+                    className="p-10 sm:p-16 space-y-8 text-left"
                   >
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10 flex justify-between items-center text-xs font-mono">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                      <div className="p-8 rounded-2xl bg-[#0c1017]/90 border border-white/10 flex justify-between items-center text-sm font-mono shadow-lg">
                         <span className="text-white/40">Architecture Role:</span>
                         <span className="text-white font-medium">{project.role}</span>
                       </div>
-                      <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10 flex justify-between items-center text-xs font-mono">
+                      <div className="p-8 rounded-2xl bg-[#0c1017]/90 border border-white/10 flex justify-between items-center text-sm font-mono shadow-lg">
                         <span className="text-white/40">Production Year:</span>
                         <span className="text-white font-medium">{project.year}</span>
                       </div>
-                      <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10 flex justify-between items-center text-xs font-mono">
+                      <div className="p-8 rounded-2xl bg-[#0c1017]/90 border border-white/10 flex justify-between items-center text-sm font-mono shadow-lg">
                         <span className="text-white/40">Platform Category:</span>
                         <span className="text-white font-medium">{project.category}</span>
                       </div>
-                      <div className="p-5 rounded-xl bg-white/[0.02] border border-white/10 flex justify-between items-center text-xs font-mono">
+                      <div className="p-8 rounded-2xl bg-[#0c1017]/90 border border-white/10 flex justify-between items-center text-sm font-mono shadow-lg">
                         <span className="text-white/40">Internal Codename:</span>
                         <span className="text-white font-medium">{project.internalCodeName}</span>
                       </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <div className="p-6 rounded-xl bg-white/[0.02] border border-white/10">
-                        <h5 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-2">
+                      <div className="p-8 sm:p-10 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-lg">
+                        <h5 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-3">
                           Target Demographics
                         </h5>
-                        <p className="text-sm text-white/75 font-light leading-relaxed">{project.overview.audience}</p>
+                        <p className="text-base text-white/75 font-light leading-relaxed font-sans">{project.overview.audience}</p>
                       </div>
-                      <div className="p-6 rounded-xl bg-white/[0.02] border border-white/10">
-                        <h5 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-2">
+                      <div className="p-8 sm:p-10 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-lg">
+                        <h5 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-3">
                           Architectural Moat
                         </h5>
-                        <p className="text-sm text-white/75 font-light leading-relaxed">{project.overview.differentiator}</p>
+                        <p className="text-base text-white/75 font-light leading-relaxed font-sans">{project.overview.differentiator}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -427,7 +436,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
 
       {/* =========================================================
           CHAPTER 02: CORE PLATFORM CAPABILITIES
-          100% Centralised Design matching original website
+          Generous Card Padding (p-10 md:p-12) & Ample Breathing Room
       ========================================================= */}
       <section className="relative w-full flex flex-col items-center justify-center px-6 lg:px-12">
         <div className="max-w-6xl mx-auto w-full flex flex-col items-center text-center">
@@ -458,7 +467,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
           {/* Spacer below header */}
           <div className="w-full shrink-0 h-10 md:h-16" />
 
-          {/* Centered Bento Grid */}
+          {/* Centered Bento Grid with Generous Card Padding */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
             {project.features.map((feature, i) => (
               <motion.div 
@@ -467,23 +476,23 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ duration: 0.6, delay: i * 0.05 }}
-                className="group p-8 rounded-2xl bg-[#0c1017]/80 hover:bg-[#10141f] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between shadow-xl hover:scale-[1.02] text-left"
+                className="group p-10 md:p-12 rounded-3xl bg-[#0c1017]/90 hover:bg-[#101524] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between shadow-2xl hover:scale-[1.02] text-left min-h-[340px]"
               >
                 <div>
                   <div 
-                    className="w-12 h-12 rounded-xl flex items-center justify-center mb-6 bg-white/[0.04] text-white/80 border border-white/10 transition-all duration-300 group-hover:scale-110 group-hover:border-white/30"
+                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-8 bg-white/[0.04] text-white/80 border border-white/10 transition-all duration-300 group-hover:scale-110 group-hover:border-white/30"
                   >
                     {getFeatureIcon(feature.iconName)}
                   </div>
-                  <h3 className="text-xl font-medium text-white mb-3 group-hover:text-white transition-colors">
+                  <h3 className="text-2xl font-medium text-white mb-4 group-hover:text-white transition-colors">
                     {feature.title}
                   </h3>
-                  <p className="text-sm text-white/60 font-light leading-relaxed mb-6 font-sans">
+                  <p className="text-base text-white/65 font-light leading-relaxed mb-8 font-sans">
                     {feature.description}
                   </p>
                 </div>
                 
-                <div className="pt-5 border-t border-white/5 flex items-center justify-between text-xs font-mono text-white/40">
+                <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono text-white/40">
                   <span>Capability // 0{i + 1}</span>
                   <span className="text-emerald-400 font-medium">Production Ready</span>
                 </div>
@@ -554,7 +563,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
 
       {/* =========================================================
           CHAPTER 04: INFRASTRUCTURE & DEPENDENCIES (TECH STACK)
-          100% Centralised Design matching original website
+          Generous Card Padding (p-10 md:p-12) & Ample Breathing Room
       ========================================================= */}
       <section className="relative w-full flex flex-col items-center justify-center px-6 lg:px-12">
         <div className="max-w-6xl mx-auto w-full flex flex-col items-center text-center">
@@ -585,7 +594,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
           {/* Spacer below header */}
           <div className="w-full shrink-0 h-10 md:h-16" />
 
-          {/* Centered Tech Cards Grid */}
+          {/* Centered Tech Cards Grid with Generous Padding (p-10 md:p-12, min-h-[280px]) */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
             {project.techStackDetailed.map((item, i) => (
               <motion.div 
@@ -594,23 +603,23 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="p-8 rounded-2xl bg-[#0c1017]/80 border border-white/10 hover:border-white/25 transition-all flex flex-col justify-between shadow-xl text-left"
+                className="p-10 md:p-12 rounded-3xl bg-[#0c1017]/90 hover:bg-[#101524] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between shadow-2xl text-left min-h-[280px]"
               >
                 <div>
-                  <div className="text-[10px] font-mono tracking-widest text-white/40 uppercase mb-3 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/20" />
+                  <div className="text-xs font-mono tracking-widest text-white/50 uppercase mb-4 flex items-center gap-2">
+                    <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
                     {item.category}
                   </div>
-                  <h3 className="text-xl font-medium text-white mb-3">
+                  <h3 className="text-2xl font-medium text-white mb-4">
                     {item.name}
                   </h3>
-                  <p className="text-sm text-white/60 leading-relaxed font-light font-sans">
+                  <p className="text-base text-white/65 leading-relaxed font-light font-sans mb-8">
                     {item.role}
                   </p>
                 </div>
-                <div className="mt-8 pt-4 border-t border-white/5 flex items-center justify-between text-[11px] font-mono text-white/40">
+                <div className="mt-auto pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono text-white/40">
                   <span>Architecture Layer</span>
-                  <span className="text-white/70">Verified</span>
+                  <span className="text-emerald-400 font-medium">Verified Active</span>
                 </div>
               </motion.div>
             ))}
@@ -630,9 +639,8 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
         <div className="max-w-5xl mx-auto w-full">
           
           <div 
-            className="rounded-3xl p-12 sm:p-24 text-center border relative overflow-hidden shadow-2xl flex flex-col items-center justify-center"
+            className="rounded-[2.5rem] p-14 sm:p-28 text-center border relative overflow-hidden shadow-2xl flex flex-col items-center justify-center bg-gradient-to-b from-[#0c1017] to-[#07090f]"
             style={{ 
-              backgroundColor: project.darkBg,
               borderColor: project.darkBorder 
             }}
           >
@@ -643,17 +651,17 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             />
 
             <div className="relative z-10 flex flex-col items-center">
-              <span className="text-xs font-mono tracking-widest text-white/50 uppercase block mb-4">
+              <span className="text-xs font-mono tracking-widest text-white/50 uppercase block mb-6">
                 05 // ACCESS &amp; PRODUCTION RUNTIME
               </span>
-              <h2 className="text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-white mb-6">
+              <h2 className="text-4xl sm:text-6xl md:text-7xl font-light tracking-tight text-white mb-8">
                 Experience {project.name}
               </h2>
-              <p className="text-base sm:text-lg text-white/60 mb-12 max-w-xl mx-auto font-sans font-light leading-relaxed">
+              <p className="text-lg sm:text-xl text-white/65 mb-14 max-w-xl mx-auto font-sans font-light leading-relaxed">
                 Launch the live deployment or inspect the production codebase and automated test suites on GitHub.
               </p>
 
-              <div className="flex flex-wrap items-center justify-center gap-5">
+              <div className="flex flex-wrap items-center justify-center gap-6">
                 <a
                   href={project.liveUrl}
                   target="_blank"
@@ -694,7 +702,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             {/* Previous Project Card */}
             <Link
               href={`/projects/${project.prevProject.slug}`}
-              className="group p-8 rounded-2xl bg-[#0c1017]/80 hover:bg-[#10141f] border border-white/10 hover:border-white/25 transition-all flex flex-col justify-between shadow-xl"
+              className="group p-10 md:p-14 rounded-3xl bg-[#0c1017]/90 hover:bg-[#101524] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between shadow-2xl min-h-[220px]"
             >
               <div className="flex items-center gap-2 text-xs font-mono text-white/40 group-hover:text-white/70 transition-colors mb-4">
                 <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
@@ -713,7 +721,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             {/* Next Project Card */}
             <Link
               href={`/projects/${project.nextProject.slug}`}
-              className="group p-8 rounded-2xl bg-[#0c1017]/80 hover:bg-[#10141f] border border-white/10 hover:border-white/25 transition-all flex flex-col justify-between sm:text-right shadow-xl"
+              className="group p-10 md:p-14 rounded-3xl bg-[#0c1017]/90 hover:bg-[#101524] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between sm:text-right shadow-2xl min-h-[220px]"
             >
               <div className="flex items-center sm:justify-end gap-2 text-xs font-mono text-white/40 group-hover:text-white/70 transition-colors mb-4">
                 <span>NEXT CASE STUDY</span>
