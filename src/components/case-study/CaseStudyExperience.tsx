@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll } from "framer-motion";
 import Link from "next/link";
 import { ProjectData } from "@/data/projects";
 import RoamlyVisual from "@/components/project-visuals/RoamlyVisual";
@@ -14,8 +14,6 @@ import {
   ArrowUpRight, 
   Globe, 
   Sparkles, 
-  CheckCircle2, 
-  Cpu, 
   ChevronRight,
   ChevronLeft,
   Compass,
@@ -35,11 +33,6 @@ import {
   DollarSign,
   Navigation as NavIcon,
   CreditCard,
-  Zap,
-  Activity,
-  Server,
-  Layers,
-  ShieldCheck,
   ArrowDown
 } from "lucide-react";
 
@@ -64,10 +57,9 @@ function getFeatureIcon(iconName: string) {
     case "AlertTriangle": return <AlertTriangle className="w-5 h-5" />;
     case "Code2": return <Code2 className="w-5 h-5" />;
     case "Bot": return <Bot className="w-5 h-5" />;
-    case "Cpu": return <Cpu className="w-5 h-5" />;
+    case "Cpu": return <Bot className="w-5 h-5" />;
     case "TrendingUp": return <TrendingUp className="w-5 h-5" />;
     case "Workflow": return <Workflow className="w-5 h-5" />;
-    case "CheckCircle2": return <CheckCircle2 className="w-5 h-5" />;
     case "Box": return <Box className="w-5 h-5" />;
     case "History": return <History className="w-5 h-5" />;
     default: return <Sparkles className="w-5 h-5" />;
@@ -100,18 +92,18 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
           DYNAMIC AMBIENT BACKGROUND GLOWS
       ========================================================= */}
       <div 
-        className="fixed top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[700px] rounded-full blur-[200px] pointer-events-none opacity-25 -z-10 transition-colors duration-1000"
+        className="fixed top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[750px] rounded-full blur-[220px] pointer-events-none opacity-25 -z-10 transition-colors duration-1000"
         style={{ background: project.darkGlow }}
       />
       <div 
-        className="fixed bottom-0 right-0 w-[600px] h-[600px] rounded-full blur-[220px] pointer-events-none opacity-15 -z-10"
+        className="fixed bottom-0 right-0 w-[650px] h-[650px] rounded-full blur-[240px] pointer-events-none opacity-15 -z-10"
         style={{ background: project.darkGlow }}
       />
 
       {/* =========================================================
           STICKY TOP NAVIGATION BAR
       ========================================================= */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-[#05070a]/80 backdrop-blur-2xl border-b border-white/10 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-[#05070a]/85 backdrop-blur-2xl border-b border-white/10 transition-all shadow-[0_10px_30px_rgba(0,0,0,0.8)]">
         <div className="max-w-7xl mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
           <Link
             href="/#work"
@@ -156,11 +148,12 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
       </nav>
 
       {/* =========================================================
-          CHAPTER 00: FULL-SCREEN CINEMATIC HERO (COMMANDS THE ENTIRE SCREEN)
+          CHAPTER 00: FULL-VIEWPORT CINEMATIC HERO
+          Spacious keynote presentation with dedicated breathing room
       ========================================================= */}
       <section 
         ref={heroRef}
-        className="relative w-full min-h-screen flex flex-col justify-center items-center text-center px-6 lg:px-12 pt-28 pb-16"
+        className="relative w-full min-h-screen flex flex-col justify-center items-center text-center px-6 lg:px-12 pt-32 pb-24"
       >
         <motion.div
           initial={{ opacity: 0, y: 30, filter: "blur(12px)" }}
@@ -168,7 +161,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-5xl mx-auto flex flex-col items-center"
         >
-          {/* Top Floating Telemetry Pill */}
+          {/* Top Telemetry Badge */}
           <div className="flex flex-wrap items-center justify-center gap-3 mb-8">
             <span className={`px-4 py-1.5 rounded-full text-xs font-mono tracking-widest uppercase border ${project.badgeStyle} flex items-center gap-2`}>
               <span className="w-2 h-2 rounded-full bg-current animate-ping" />
@@ -179,8 +172,8 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             </span>
           </div>
 
-          {/* Large Masked Gradient Typography */}
-          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-light tracking-tight text-white mb-8 leading-[1.04] font-sans drop-shadow-2xl">
+          {/* Large Title */}
+          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-light tracking-tight text-white mb-8 leading-[1.05] font-sans drop-shadow-2xl">
             {project.name}
           </h1>
 
@@ -189,21 +182,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             {project.tagline}
           </p>
 
-          {/* Floating Key Metrics HUD Strip (Flight Instruments) */}
-          <div className="w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl mb-12 shadow-2xl">
-            {project.metrics.map((metric, i) => (
-              <div key={i} className="flex flex-col items-center justify-center p-3 text-center">
-                <span className="text-2xl sm:text-3xl lg:text-4xl font-light font-mono text-white mb-1">
-                  {metric.value}
-                </span>
-                <span className="text-[11px] font-mono tracking-wider uppercase text-white/50">
-                  {metric.label}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          {/* Action Cockpit Buttons */}
+          {/* Action Cockpit Buttons — Placed right below tagline with generous space */}
           <div className="flex flex-wrap items-center justify-center gap-5 mb-16">
             <a
               href={project.liveUrl}
@@ -227,13 +206,27 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             </a>
           </div>
 
-          {/* Scroll Down Prompt Indicator */}
+          {/* Key Metrics HUD Strip — Positioned with dedicated vertical margins */}
+          <div className="w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl bg-white/[0.02] border border-white/10 backdrop-blur-xl mb-16 shadow-2xl">
+            {project.metrics.map((metric, i) => (
+              <div key={i} className="flex flex-col items-center justify-center p-3 text-center">
+                <span className="text-2xl sm:text-3xl lg:text-4xl font-light font-mono text-white mb-1.5">
+                  {metric.value}
+                </span>
+                <span className="text-[11px] font-mono tracking-wider uppercase text-white/50">
+                  {metric.label}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* Scroll Down Prompt */}
           <motion.div 
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             className="flex flex-col items-center gap-2 text-[11px] font-mono tracking-widest text-white/40 uppercase"
           >
-            <span>EXPLORE SYSTEM ARCHITECTURE</span>
+            <span>SCROLL DOWN TO EXPLORE SYSTEM ARCHITECTURE</span>
             <ArrowDown className="w-3.5 h-3.5 text-white/40" />
           </motion.div>
         </motion.div>
@@ -241,10 +234,10 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
 
       {/* =========================================================
           CHAPTER 01: DEDICATED LIVE ARCHITECTURE SIMULATOR
-          Spacious, distinct, command-center experience
+          Occupies full screen height with generous margins
       ========================================================= */}
-      <section className="relative w-full py-36 md:py-48 border-t border-white/10 bg-[#06080d]/90">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
+      <section className="relative w-full min-h-screen flex flex-col justify-center items-center py-36 md:py-48 border-t border-white/10 bg-[#06080d]/90">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
           
           {/* Chapter Header */}
           <motion.div 
@@ -252,16 +245,16 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col items-center text-center mb-16 md:mb-24"
+            className="flex flex-col items-center text-center mb-16 md:mb-20"
           >
             <span className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-4 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               01 // LIVE ARCHITECTURE SIMULATOR
             </span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-white mb-4">
               Interactive Runtime Console
             </h2>
-            <p className="text-base sm:text-lg text-white/60 max-w-2xl font-sans font-light leading-relaxed">
+            <p className="text-sm sm:text-base text-white/60 max-w-xl font-sans font-light leading-relaxed">
               Observe real-time execution telemetry, inspect state transitions, and test active pipeline flows inside the simulated hardware container below.
             </p>
           </motion.div>
@@ -296,9 +289,10 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
 
       {/* =========================================================
           CHAPTER 02: SYSTEM OVERVIEW & ARCHITECTURAL BLUEPRINT
+          Occupies full screen height with generous margins
       ========================================================= */}
-      <section className="relative w-full py-36 md:py-48 border-t border-white/10 bg-[#05070a]">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
+      <section className="relative w-full min-h-screen flex flex-col justify-center items-center py-36 md:py-48 border-t border-white/10 bg-[#05070a]">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
           
           {/* Chapter Header */}
           <motion.div 
@@ -306,15 +300,15 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col items-center text-center mb-16 md:mb-24"
+            className="flex flex-col items-center text-center mb-16 md:mb-20"
           >
             <span className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-4">
               02 // ENGINEERING BLUEPRINT
             </span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-white mb-4">
               Architectural Rationale &amp; Overview
             </h2>
-            <p className="text-base sm:text-lg text-white/60 max-w-2xl font-sans font-light leading-relaxed">
+            <p className="text-sm sm:text-base text-white/60 max-w-xl font-sans font-light leading-relaxed">
               An engineering audit of the fundamental challenges, system specifications, and core rationale behind {project.name}.
             </p>
           </motion.div>
@@ -429,8 +423,8 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
       {/* =========================================================
           CHAPTER 03: PLATFORM CAPABILITIES BENTO GRID
       ========================================================= */}
-      <section className="relative w-full py-36 md:py-48 border-t border-white/10 bg-[#06080d]/90">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
+      <section className="relative w-full min-h-screen flex flex-col justify-center items-center py-36 md:py-48 border-t border-white/10 bg-[#06080d]/90">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
           
           {/* Chapter Header */}
           <motion.div 
@@ -438,15 +432,15 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col items-center text-center mb-16 md:mb-24"
+            className="flex flex-col items-center text-center mb-16 md:mb-20"
           >
             <span className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-4">
               03 // CORE CAPABILITIES
             </span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-white mb-4">
               Engineered Features &amp; Modules
             </h2>
-            <p className="text-base sm:text-lg text-white/60 max-w-2xl font-sans font-light leading-relaxed">
+            <p className="text-sm sm:text-base text-white/60 max-w-xl font-sans font-light leading-relaxed">
               Every system capability is constructed for high reliability, fault tolerance, and developer satisfaction.
             </p>
           </motion.div>
@@ -490,8 +484,8 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
       {/* =========================================================
           CHAPTER 04: VISUAL ARCHITECTURE & INTERFACE GALLERY
       ========================================================= */}
-      <section className="relative w-full py-36 md:py-48 border-t border-white/10 bg-[#05070a]">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
+      <section className="relative w-full min-h-screen flex flex-col justify-center items-center py-36 md:py-48 border-t border-white/10 bg-[#05070a]">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
           
           {/* Chapter Header */}
           <motion.div 
@@ -499,15 +493,15 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col items-center text-center mb-16 md:mb-24"
+            className="flex flex-col items-center text-center mb-16 md:mb-20"
           >
             <span className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-4">
               04 // VISUAL ARCHITECTURE
             </span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-white mb-4">
               Interface Gallery &amp; Inspector
             </h2>
-            <p className="text-base sm:text-lg text-white/60 max-w-2xl font-sans font-light leading-relaxed">
+            <p className="text-sm sm:text-base text-white/60 max-w-xl font-sans font-light leading-relaxed">
               Explore user journeys and high-resolution architecture views. Click any item to inspect in fullscreen modal.
             </p>
           </motion.div>
@@ -534,8 +528,8 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
       {/* =========================================================
           CHAPTER 05: INFRASTRUCTURE & DEPENDENCIES
       ========================================================= */}
-      <section className="relative w-full py-36 md:py-48 border-t border-white/10 bg-[#06080d]/90">
-        <div className="max-w-6xl mx-auto px-6 lg:px-12">
+      <section className="relative w-full min-h-screen flex flex-col justify-center items-center py-36 md:py-48 border-t border-white/10 bg-[#06080d]/90">
+        <div className="max-w-6xl mx-auto px-6 lg:px-12 w-full">
           
           {/* Chapter Header */}
           <motion.div 
@@ -543,15 +537,15 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.8 }}
-            className="flex flex-col items-center text-center mb-16 md:mb-24"
+            className="flex flex-col items-center text-center mb-16 md:mb-20"
           >
             <span className="text-xs font-mono tracking-[0.3em] text-white/40 uppercase mb-4">
               05 // INFRASTRUCTURE &amp; DEPENDENCIES
             </span>
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-light tracking-tight text-white mb-6">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-light tracking-tight text-white mb-4">
               Technology Stack Breakdown
             </h2>
-            <p className="text-base sm:text-lg text-white/60 max-w-2xl font-sans font-light leading-relaxed">
+            <p className="text-sm sm:text-base text-white/60 max-w-xl font-sans font-light leading-relaxed">
               Carefully chosen libraries, runtimes, and databases powering {project.name}.
             </p>
           </motion.div>
