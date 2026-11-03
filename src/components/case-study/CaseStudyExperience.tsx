@@ -343,39 +343,48 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.3 }}
-                    className="p-10 sm:p-16 space-y-8 text-left"
+                    className="p-10 sm:p-16 space-y-8 flex flex-col items-center text-center"
                   >
-                    <div className="p-8 sm:p-12 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-xl">
-                      <div className="text-xs font-mono tracking-widest text-white/50 uppercase mb-4 flex items-center gap-2">
+                    <div className="p-8 sm:p-12 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-xl flex flex-col items-center text-center w-full">
+                      <div className="text-xs font-mono tracking-widest text-white/50 uppercase mb-4 flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/5">
                         <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
-                        Core Identity &amp; Platform Definition
+                        <span>Core Identity &amp; Platform Definition</span>
                       </div>
-                      <h4 className="text-2xl font-medium text-white mb-4">
+                      <h4 className="text-2xl sm:text-3xl font-medium text-white mb-4 text-center">
                         What is {project.name}?
                       </h4>
-                      <p className="text-white/75 leading-relaxed text-base sm:text-lg font-light font-sans">{project.overview.what}</p>
+                      <div className="w-16 h-[1px] bg-white/15 mb-6 mx-auto" />
+                      <p className="text-white/75 leading-relaxed text-base sm:text-lg font-light font-sans text-center max-w-3xl mx-auto">
+                        {project.overview.what}
+                      </p>
                     </div>
 
-                    <div className="p-8 sm:p-12 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-xl">
-                      <div className="text-xs font-mono tracking-widest text-white/50 uppercase mb-4 flex items-center gap-2">
+                    <div className="p-8 sm:p-12 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-xl flex flex-col items-center text-center w-full">
+                      <div className="text-xs font-mono tracking-widest text-white/50 uppercase mb-4 flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/5">
                         <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
-                        Engineering Motivation
+                        <span>Engineering Motivation</span>
                       </div>
-                      <h4 className="text-2xl font-medium text-white mb-4">
+                      <h4 className="text-2xl sm:text-3xl font-medium text-white mb-4 text-center">
                         Why It Was Developed
                       </h4>
-                      <p className="text-white/75 leading-relaxed text-base sm:text-lg font-light font-sans">{project.overview.why}</p>
+                      <div className="w-16 h-[1px] bg-white/15 mb-6 mx-auto" />
+                      <p className="text-white/75 leading-relaxed text-base sm:text-lg font-light font-sans text-center max-w-3xl mx-auto">
+                        {project.overview.why}
+                      </p>
                     </div>
 
-                    <div className="p-8 sm:p-12 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-xl">
-                      <div className="text-xs font-mono tracking-widest text-white/50 uppercase mb-4 flex items-center gap-2">
+                    <div className="p-8 sm:p-12 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-xl flex flex-col items-center text-center w-full">
+                      <div className="text-xs font-mono tracking-widest text-white/50 uppercase mb-4 flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/5">
                         <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
-                        Architectural Solution
+                        <span>Architectural Solution</span>
                       </div>
-                      <h4 className="text-2xl font-medium text-white mb-4">
+                      <h4 className="text-2xl sm:text-3xl font-medium text-white mb-4 text-center">
                         The Problem It Solves
                       </h4>
-                      <p className="text-white/75 leading-relaxed text-base sm:text-lg font-light font-sans">{project.overview.problem}</p>
+                      <div className="w-16 h-[1px] bg-white/15 mb-6 mx-auto" />
+                      <p className="text-white/75 leading-relaxed text-base sm:text-lg font-light font-sans text-center max-w-3xl mx-auto">
+                        {project.overview.problem}
+                      </p>
                     </div>
                   </motion.div>
                 )}
@@ -387,39 +396,45 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -15 }}
                     transition={{ duration: 0.3 }}
-                    className="p-10 sm:p-16 space-y-8 text-left"
+                    className="p-10 sm:p-16 space-y-8 flex flex-col items-center text-center"
                   >
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <div className="p-8 rounded-2xl bg-[#0c1017]/90 border border-white/10 flex justify-between items-center text-sm font-mono shadow-lg">
-                        <span className="text-white/40">Architecture Role:</span>
-                        <span className="text-white font-medium">{project.role}</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+                      <div className="p-8 rounded-2xl bg-[#0c1017]/90 border border-white/10 flex flex-col items-center justify-center text-center gap-2 font-mono shadow-lg">
+                        <span className="text-xs uppercase tracking-widest text-white/40">Architecture Role</span>
+                        <span className="text-base sm:text-lg text-white font-medium">{project.role}</span>
                       </div>
-                      <div className="p-8 rounded-2xl bg-[#0c1017]/90 border border-white/10 flex justify-between items-center text-sm font-mono shadow-lg">
-                        <span className="text-white/40">Production Year:</span>
-                        <span className="text-white font-medium">{project.year}</span>
+                      <div className="p-8 rounded-2xl bg-[#0c1017]/90 border border-white/10 flex flex-col items-center justify-center text-center gap-2 font-mono shadow-lg">
+                        <span className="text-xs uppercase tracking-widest text-white/40">Production Year</span>
+                        <span className="text-base sm:text-lg text-white font-medium">{project.year}</span>
                       </div>
-                      <div className="p-8 rounded-2xl bg-[#0c1017]/90 border border-white/10 flex justify-between items-center text-sm font-mono shadow-lg">
-                        <span className="text-white/40">Platform Category:</span>
-                        <span className="text-white font-medium">{project.category}</span>
+                      <div className="p-8 rounded-2xl bg-[#0c1017]/90 border border-white/10 flex flex-col items-center justify-center text-center gap-2 font-mono shadow-lg">
+                        <span className="text-xs uppercase tracking-widest text-white/40">Platform Category</span>
+                        <span className="text-base sm:text-lg text-white font-medium">{project.category}</span>
                       </div>
-                      <div className="p-8 rounded-2xl bg-[#0c1017]/90 border border-white/10 flex justify-between items-center text-sm font-mono shadow-lg">
-                        <span className="text-white/40">Internal Codename:</span>
-                        <span className="text-white font-medium">{project.internalCodeName}</span>
+                      <div className="p-8 rounded-2xl bg-[#0c1017]/90 border border-white/10 flex flex-col items-center justify-center text-center gap-2 font-mono shadow-lg">
+                        <span className="text-xs uppercase tracking-widest text-white/40">Internal Codename</span>
+                        <span className="text-base sm:text-lg text-white font-medium">{project.internalCodeName}</span>
                       </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                      <div className="p-8 sm:p-10 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-lg">
-                        <h5 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full">
+                      <div className="p-8 sm:p-10 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-lg flex flex-col items-center text-center">
+                        <h5 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-3 text-center">
                           Target Demographics
                         </h5>
-                        <p className="text-base text-white/75 font-light leading-relaxed font-sans">{project.overview.audience}</p>
+                        <div className="w-10 h-[1px] bg-white/15 mb-4 mx-auto" />
+                        <p className="text-base text-white/75 font-light leading-relaxed font-sans text-center max-w-md mx-auto">
+                          {project.overview.audience}
+                        </p>
                       </div>
-                      <div className="p-8 sm:p-10 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-lg">
-                        <h5 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-3">
+                      <div className="p-8 sm:p-10 rounded-2xl bg-[#0c1017]/90 border border-white/10 shadow-lg flex flex-col items-center text-center">
+                        <h5 className="text-xs font-mono tracking-widest text-white/50 uppercase mb-3 text-center">
                           Architectural Moat
                         </h5>
-                        <p className="text-base text-white/75 font-light leading-relaxed font-sans">{project.overview.differentiator}</p>
+                        <div className="w-10 h-[1px] bg-white/15 mb-4 mx-auto" />
+                        <p className="text-base text-white/75 font-light leading-relaxed font-sans text-center max-w-md mx-auto">
+                          {project.overview.differentiator}
+                        </p>
                       </div>
                     </div>
                   </motion.div>
@@ -476,25 +491,27 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ duration: 0.6, delay: i * 0.05 }}
-                className="group p-10 md:p-12 rounded-3xl bg-[#0c1017]/90 hover:bg-[#101524] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between shadow-2xl hover:scale-[1.02] text-left min-h-[340px]"
+                className="group p-10 md:p-12 rounded-3xl bg-[#0c1017]/90 hover:bg-[#101524] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col items-center justify-between shadow-2xl hover:scale-[1.02] text-center min-h-[360px]"
               >
-                <div>
+                <div className="flex flex-col items-center w-full">
                   <div 
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-8 bg-white/[0.04] text-white/80 border border-white/10 transition-all duration-300 group-hover:scale-110 group-hover:border-white/30"
+                    className="w-16 h-16 rounded-2xl flex items-center justify-center mb-8 bg-white/[0.04] text-white/80 border border-white/10 transition-all duration-300 group-hover:scale-110 group-hover:border-white/30 group-hover:bg-white/[0.08] shadow-inner mx-auto"
                   >
                     {getFeatureIcon(feature.iconName)}
                   </div>
-                  <h3 className="text-2xl font-medium text-white mb-4 group-hover:text-white transition-colors">
+                  <h3 className="text-2xl font-medium text-white mb-4 text-center group-hover:text-white transition-colors">
                     {feature.title}
                   </h3>
-                  <p className="text-base text-white/65 font-light leading-relaxed mb-8 font-sans">
+                  <div className="w-12 h-[1px] bg-white/15 mb-6 group-hover:w-20 group-hover:bg-white/30 transition-all duration-300 mx-auto" />
+                  <p className="text-base text-white/65 font-light leading-relaxed mb-8 font-sans text-center max-w-sm mx-auto">
                     {feature.description}
                   </p>
                 </div>
                 
-                <div className="pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono text-white/40">
-                  <span>Capability // 0{i + 1}</span>
-                  <span className="text-emerald-400 font-medium">Production Ready</span>
+                <div className="w-full mt-auto pt-6 border-t border-white/10 flex items-center justify-center gap-3 text-xs font-mono text-white/40">
+                  <span>CAPABILITY // 0{i + 1}</span>
+                  <span className="w-1 h-1 rounded-full bg-white/20" />
+                  <span className="text-emerald-400 font-medium">PRODUCTION READY</span>
                 </div>
               </motion.div>
             ))}
@@ -594,7 +611,7 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
           {/* Spacer below header */}
           <div className="w-full shrink-0 h-10 md:h-16" />
 
-          {/* Centered Tech Cards Grid with Generous Padding (p-10 md:p-12, min-h-[280px]) */}
+          {/* Centered Tech Cards Grid with Generous Padding (p-10 md:p-12, min-h-[300px]) */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 w-full max-w-6xl">
             {project.techStackDetailed.map((item, i) => (
               <motion.div 
@@ -603,23 +620,25 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-10%" }}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="p-10 md:p-12 rounded-3xl bg-[#0c1017]/90 hover:bg-[#101524] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between shadow-2xl text-left min-h-[280px]"
+                className="group p-10 md:p-12 rounded-3xl bg-[#0c1017]/90 hover:bg-[#101524] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col items-center justify-between shadow-2xl hover:scale-[1.02] text-center min-h-[300px]"
               >
-                <div>
-                  <div className="text-xs font-mono tracking-widest text-white/50 uppercase mb-4 flex items-center gap-2">
+                <div className="flex flex-col items-center w-full">
+                  <div className="text-xs font-mono tracking-widest text-white/50 uppercase mb-5 flex items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-white/5">
                     <span className="w-2 h-2 rounded-full" style={{ backgroundColor: project.accentColor }} />
-                    {item.category}
+                    <span>{item.category}</span>
                   </div>
-                  <h3 className="text-2xl font-medium text-white mb-4">
+                  <h3 className="text-2xl font-medium text-white mb-3 text-center group-hover:text-white transition-colors">
                     {item.name}
                   </h3>
-                  <p className="text-base text-white/65 leading-relaxed font-light font-sans mb-8">
+                  <div className="w-12 h-[1px] bg-white/15 mb-5 group-hover:w-20 group-hover:bg-white/30 transition-all duration-300 mx-auto" />
+                  <p className="text-base text-white/65 leading-relaxed font-light font-sans mb-8 text-center max-w-sm mx-auto">
                     {item.role}
                   </p>
                 </div>
-                <div className="mt-auto pt-6 border-t border-white/10 flex items-center justify-between text-xs font-mono text-white/40">
-                  <span>Architecture Layer</span>
-                  <span className="text-emerald-400 font-medium">Verified Active</span>
+                <div className="w-full mt-auto pt-6 border-t border-white/10 flex items-center justify-center gap-3 text-xs font-mono text-white/40">
+                  <span>ARCHITECTURE LAYER</span>
+                  <span className="w-1 h-1 rounded-full bg-white/20" />
+                  <span className="text-emerald-400 font-medium">VERIFIED ACTIVE</span>
                 </div>
               </motion.div>
             ))}
@@ -702,17 +721,17 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             {/* Previous Project Card */}
             <Link
               href={`/projects/${project.prevProject.slug}`}
-              className="group p-10 md:p-14 rounded-3xl bg-[#0c1017]/90 hover:bg-[#101524] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between shadow-2xl min-h-[220px]"
+              className="group p-10 md:p-14 rounded-3xl bg-[#0c1017]/90 hover:bg-[#101524] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col items-center justify-center text-center shadow-2xl min-h-[220px] hover:scale-[1.02]"
             >
-              <div className="flex items-center gap-2 text-xs font-mono text-white/40 group-hover:text-white/70 transition-colors mb-4">
+              <div className="flex items-center justify-center gap-2 text-xs font-mono text-white/40 group-hover:text-white/70 transition-colors mb-4">
                 <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
                 <span>PREVIOUS CASE STUDY</span>
               </div>
               <div>
-                <span className="text-[10px] font-mono text-white/40 uppercase block mb-1">
+                <span className="text-[10px] font-mono text-white/40 uppercase block mb-2 text-center">
                   {project.prevProject.category}
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-light text-white group-hover:text-white transition-colors">
+                <h3 className="text-2xl sm:text-3xl font-light text-white group-hover:text-white transition-colors text-center">
                   {project.prevProject.name}
                 </h3>
               </div>
@@ -721,17 +740,17 @@ export default function CaseStudyExperience({ project }: CaseStudyProps) {
             {/* Next Project Card */}
             <Link
               href={`/projects/${project.nextProject.slug}`}
-              className="group p-10 md:p-14 rounded-3xl bg-[#0c1017]/90 hover:bg-[#101524] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col justify-between sm:text-right shadow-2xl min-h-[220px]"
+              className="group p-10 md:p-14 rounded-3xl bg-[#0c1017]/90 hover:bg-[#101524] border border-white/10 hover:border-white/25 transition-all duration-300 flex flex-col items-center justify-center text-center shadow-2xl min-h-[220px] hover:scale-[1.02]"
             >
-              <div className="flex items-center sm:justify-end gap-2 text-xs font-mono text-white/40 group-hover:text-white/70 transition-colors mb-4">
+              <div className="flex items-center justify-center gap-2 text-xs font-mono text-white/40 group-hover:text-white/70 transition-colors mb-4">
                 <span>NEXT CASE STUDY</span>
                 <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
               <div>
-                <span className="text-[10px] font-mono text-white/40 uppercase block mb-1">
+                <span className="text-[10px] font-mono text-white/40 uppercase block mb-2 text-center">
                   {project.nextProject.category}
                 </span>
-                <h3 className="text-2xl sm:text-3xl font-light text-white group-hover:text-white transition-colors">
+                <h3 className="text-2xl sm:text-3xl font-light text-white group-hover:text-white transition-colors text-center">
                   {project.nextProject.name}
                 </h3>
               </div>

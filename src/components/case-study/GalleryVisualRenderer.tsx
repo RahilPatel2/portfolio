@@ -75,8 +75,8 @@ export default function GalleryVisualRenderer({ project, item, index }: Props) {
         </div>
 
         {/* Caption */}
-        <div className="p-4 sm:p-5 bg-white/[0.01] border-t border-white/10 flex items-center justify-between text-xs text-white/60 font-mono">
-          <span className="line-clamp-2">{item.caption}</span>
+        <div className="p-4 sm:p-5 bg-white/[0.01] border-t border-white/10 flex items-center justify-center text-xs text-white/60 font-mono text-center">
+          <span className="line-clamp-2 max-w-xl mx-auto">{item.caption}</span>
         </div>
       </div>
 
